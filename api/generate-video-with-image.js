@@ -1,4 +1,4 @@
-const { client } = require('@gradio/client');
+// Using dynamic import for ES module compatibility
 
 // Smart prompting system for image-based longer videos
 function createImageBasedSequentialPrompts(basePrompt, imageData, videoLength = 20) {
@@ -99,6 +99,7 @@ module.exports = async function handler(req, res) {
       for (let i = 0; i < segmentPrompts.length; i++) {
         console.log(`Generating segment ${i + 1}/${segmentPrompts.length}: ${segmentPrompts[i]}`);
         
+        const { client } = await import('@gradio/client');
         const app = await client("SahaniJi/Instant-Video");
         const result = await app.predict("/instant_video", [
           segmentPrompts[i],
@@ -134,6 +135,7 @@ module.exports = async function handler(req, res) {
       // Generate single 2-second video with image context
       const enhancedPrompt = `Focus: ${prompt} (Based on uploaded image: ${imageData ? 'provided' : 'none'})`;
       
+      const { client } = await import('@gradio/client');
       const app = await client("SahaniJi/Instant-Video");
       const result = await app.predict("/instant_video", [
         enhancedPrompt,

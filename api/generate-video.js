@@ -1,4 +1,4 @@
-const { client } = require('@gradio/client');
+// Using dynamic import for ES module compatibility
 
 // Smart prompting system for longer videos
 function createSequentialPrompts(basePrompt, videoLength = 20) {
@@ -122,6 +122,7 @@ module.exports = async function handler(req, res) {
         
         console.log(`Segment ${i + 1} API Request data:`, segmentApiData);
         
+        const { client } = await import('@gradio/client');
         const app = await client("SahaniJi/Instant-Video");
         const result = await app.predict("/instant_video", segmentApiData);
         
@@ -157,6 +158,7 @@ module.exports = async function handler(req, res) {
       
       console.log('API Request data:', apiData);
       
+      const { client } = await import('@gradio/client');
       const app = await client("SahaniJi/Instant-Video");
       const result = await app.predict("/instant_video", apiData);
       

@@ -1,4 +1,4 @@
-const { client } = require('@gradio/client');
+// Using dynamic import for ES module compatibility
 
 // Enhanced prompting system for TikTok-style transitions
 function createTransitionPrompts(basePrompt, videoLength = 2) {
@@ -101,6 +101,7 @@ module.exports = async function handler(req, res) {
       for (let i = 0; i < segmentPrompts.length; i++) {
         console.log(`Generating transition segment ${i + 1}/${segmentPrompts.length}: ${segmentPrompts[i]}`);
         
+        const { client } = await import('@gradio/client');
         const app = await client("SahaniJi/Instant-Video");
         const result = await app.predict("/instant_video", [
           segmentPrompts[i],
@@ -138,6 +139,7 @@ module.exports = async function handler(req, res) {
       // Generate single 2-second transition video
       const enhancedPrompt = `Focus: ${prompt} (TikTok transition from uploaded video) (Smooth transition from last frame)`;
       
+      const { client } = await import('@gradio/client');
       const app = await client("SahaniJi/Instant-Video");
       const result = await app.predict("/instant_video", [
         enhancedPrompt,

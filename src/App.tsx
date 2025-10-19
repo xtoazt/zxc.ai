@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { VideoCamera, Upload, Download, Sparkles, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2 } from 'lucide-react';
 import VideoGenerator from './components/VideoGenerator';
 import ImageUpload from './components/ImageUpload';
 import VideoDisplay from './components/VideoDisplay';
@@ -57,7 +57,7 @@ const App: React.FC = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
-            <VideoCamera className="w-12 h-12 text-white mr-3 animate-float" />
+            <Video className="w-12 h-12 text-white mr-3 animate-float" />
             <h1 className="text-5xl font-bold text-white">
               Instant⚡ <span className="gradient-text">Video Generator</span>
             </h1>

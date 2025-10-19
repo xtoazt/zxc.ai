@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VideoCamera, Sparkles } from 'lucide-react';
+import { Video, Sparkles } from 'lucide-react';
 
 interface VideoGeneratorProps {
   onVideoGenerated: (result: any) => void;
@@ -62,7 +62,7 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
     <div className="space-y-6">
       <div className="text-center mb-8">
         <div className="flex items-center justify-center mb-4">
-          <VideoCamera className="w-8 h-8 text-white mr-3" />
+          <Video className="w-8 h-8 text-white mr-3" />
           <h2 className="text-3xl font-bold text-white">Text to Video</h2>
         </div>
         <p className="text-blue-100">

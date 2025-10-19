@@ -9,6 +9,12 @@
     },
     "api/generate-video-with-image.js": {
       "maxDuration": 300
+    },
+    "api/enhance-prompt.js": {
+      "maxDuration": 30
+    },
+    "api/ai-suggestions.js": {
+      "maxDuration": 30
     }
   }
 }

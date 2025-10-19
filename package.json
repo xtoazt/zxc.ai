@@ -1,7 +1,7 @@
 {
-  "name": "instant-video-generator",
+  "name": "zxc-ai",
   "version": "1.0.0",
-  "description": "AI Video Generator with Image Upload using Instant Video API - Vercel Ready",
+  "description": "zxc.ai - AI-Powered Video Generation Platform with LLM7 Enhancement",
   "main": "index.js",
   "homepage": ".",
   "scripts": {
@@ -12,14 +12,15 @@
     "start": "cd server && npm start",
     "vercel-build": "vite build"
   },
-  "keywords": ["video", "ai", "generation", "instant-video", "vercel"],
+  "keywords": ["video", "ai", "generation", "zxc-ai", "llm7", "vercel"],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "lucide-react": "^0.292.0"
+    "lucide-react": "^0.292.0",
+    "openai": "^4.20.1"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

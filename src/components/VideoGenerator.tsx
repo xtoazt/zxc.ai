@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Video, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Video, Sparkles, Brain, Wand2 } from 'lucide-react';
 
 interface VideoGeneratorProps {
   onVideoGenerated: (result: any) => void;
@@ -10,20 +10,63 @@ interface VideoGeneratorProps {
     motionOptions: string[];
     inferenceSteps: string[];
   };
+  initialPrompt?: string;
 }
 
 const VideoGenerator: React.FC<VideoGeneratorProps> = ({
   onVideoGenerated,
   onGenerationStart,
   isGenerating,
-  options
+  options,
+  initialPrompt = ''
 }) => {
-  const [prompt, setPrompt] = useState('');
+  const [prompt, setPrompt] = useState(initialPrompt);
   const [baseModel, setBaseModel] = useState('Realistic');
   const [motion, setMotion] = useState('');
   const [inferenceSteps, setInferenceSteps] = useState('4-Step');
   const [videoLength, setVideoLength] = useState(2);
   const [generateLongVideo, setGenerateLongVideo] = useState(false);
+  const [isEnhancing, setIsEnhancing] = useState(false);
+  const [enhancedPrompt, setEnhancedPrompt] = useState('');
+
+  useEffect(() => {
+    if (initialPrompt) {
+      setPrompt(initialPrompt);
+    }
+  }, [initialPrompt]);
+
+  const enhancePrompt = async () => {
+    if (!prompt.trim()) {
+      alert('Please enter a prompt first');
+      return;
+    }
+
+    setIsEnhancing(true);
+    try {
+      const response = await fetch('/api/enhance-prompt', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt,
+          videoLength,
+          hasImage: false,
+          baseModel
+        }),
+      });
+
+      const result = await response.json();
+      if (result.success) {
+        setEnhancedPrompt(result.enhancedPrompt);
+        setPrompt(result.enhancedPrompt);
+      }
+    } catch (error) {
+      console.error('Error enhancing prompt:', error);
+    } finally {
+      setIsEnhancing(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,9 +120,29 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Prompt Input */}
         <div>
-          <label className="block text-white font-semibold mb-2">
-            Prompt
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-white font-semibold">
+              Prompt
+            </label>
+            <button
+              type="button"
+              onClick={enhancePrompt}
+              disabled={isEnhancing || isGenerating || !prompt.trim()}
+              className="flex items-center px-3 py-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white text-sm rounded-lg transition-colors"
+            >
+              {isEnhancing ? (
+                <>
+                  <Brain className="w-4 h-4 mr-1 animate-spin" />
+                  Enhancing...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="w-4 h-4 mr-1" />
+                  AI Enhance
+                </>
+              )}
+            </button>
+          </div>
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
@@ -88,6 +151,13 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
             rows={4}
             disabled={isGenerating}
           />
+          {enhancedPrompt && enhancedPrompt !== prompt && (
+            <div className="mt-2 p-2 bg-green-500/20 border border-green-500/50 rounded-lg">
+              <p className="text-green-200 text-sm">
+                ✨ AI Enhanced: {enhancedPrompt}
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Video Length Control */}

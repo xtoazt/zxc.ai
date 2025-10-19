@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2 } from 'lucide-react';
 import VideoGenerator from './components/VideoGenerator';
 import ImageUpload from './components/ImageUpload';
 import VideoDisplay from './components/VideoDisplay';
+import AISuggestions from './components/AISuggestions';
 import './App.css';
 
 interface VideoResult {
@@ -18,7 +19,7 @@ interface Options {
 }
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'text' | 'image'>('text');
+  const [activeTab, setActiveTab] = useState<'text' | 'image' | 'suggestions'>('text');
   const [videoResult, setVideoResult] = useState<VideoResult | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState<Options>({
@@ -26,6 +27,7 @@ const App: React.FC = () => {
     motionOptions: [''],
     inferenceSteps: ['4-Step']
   });
+  const [selectedPrompt, setSelectedPrompt] = useState('');
 
   useEffect(() => {
     fetchOptions();
@@ -46,6 +48,11 @@ const App: React.FC = () => {
     setIsGenerating(false);
   };
 
+  const handleSuggestionSelect = (suggestion: string) => {
+    setSelectedPrompt(suggestion);
+    setActiveTab('text');
+  };
+
   const handleGenerationStart = () => {
     setIsGenerating(true);
     setVideoResult(null);
@@ -59,11 +66,11 @@ const App: React.FC = () => {
           <div className="flex items-center justify-center mb-4">
             <Video className="w-12 h-12 text-white mr-3 animate-float" />
             <h1 className="text-5xl font-bold text-white">
-              Instant⚡ <span className="gradient-text">Video Generator</span>
+              <span className="gradient-text">zxc.ai</span>
             </h1>
           </div>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            Create stunning AI-generated videos from text prompts and images using the latest Instant Video technology
+            AI-Powered Video Generation Platform with LLM7 Enhancement - Create stunning videos from text and images
           </p>
         </div>
 
@@ -92,6 +99,17 @@ const App: React.FC = () => {
               <ImageIcon className="w-5 h-5 mr-2" />
               Image + Text to Video
             </button>
+            <button
+              onClick={() => setActiveTab('suggestions')}
+              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center ${
+                activeTab === 'suggestions'
+                  ? 'bg-white text-purple-600 shadow-lg'
+                  : 'text-white hover:bg-white/20'
+              }`}
+            >
+              <Brain className="w-5 h-5 mr-2" />
+              AI Suggestions
+            </button>
           </div>
         </div>
 
@@ -104,14 +122,17 @@ const App: React.FC = () => {
                 onGenerationStart={handleGenerationStart}
                 isGenerating={isGenerating}
                 options={options}
+                initialPrompt={selectedPrompt}
               />
-            ) : (
+            ) : activeTab === 'image' ? (
               <ImageUpload
                 onVideoGenerated={handleVideoGenerated}
                 onGenerationStart={handleGenerationStart}
                 isGenerating={isGenerating}
                 options={options}
               />
+            ) : (
+              <AISuggestions onSuggestionSelect={handleSuggestionSelect} />
             )}
 
             {/* Video Display */}

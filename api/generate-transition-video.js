@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { client } = require('@gradio/client');
 
 // Enhanced prompting system for TikTok-style transitions
 function createTransitionPrompts(basePrompt, videoLength = 2) {
@@ -101,19 +101,15 @@ module.exports = async function handler(req, res) {
       for (let i = 0; i < segmentPrompts.length; i++) {
         console.log(`Generating transition segment ${i + 1}/${segmentPrompts.length}: ${segmentPrompts[i]}`);
         
-        const response = await axios.post('https://sahaniji-instant-video.hf.space/api/predict', {
-          data: [
-            segmentPrompts[i],
-            baseModel,
-            motion,
-            inferenceSteps
-          ]
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          timeout: 300000 // 5 minutes timeout per segment
-        });
+        const app = await client("SahaniJi/Instant-Video");
+        const result = await app.predict("/instant_video", [
+          segmentPrompts[i],
+          baseModel,
+          motion,
+          inferenceSteps
+        ]);
+        
+        const response = { data: result.data };
         
         videoSegments.push({
           segment: i + 1,
@@ -142,19 +138,15 @@ module.exports = async function handler(req, res) {
       // Generate single 2-second transition video
       const enhancedPrompt = `Focus: ${prompt} (TikTok transition from uploaded video) (Smooth transition from last frame)`;
       
-      const response = await axios.post('https://sahaniji-instant-video.hf.space/api/predict', {
-        data: [
-          enhancedPrompt,
-          baseModel,
-          motion,
-          inferenceSteps
-        ]
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        timeout: 300000 // 5 minutes timeout
-      });
+      const app = await client("SahaniJi/Instant-Video");
+      const result = await app.predict("/instant_video", [
+        enhancedPrompt,
+        baseModel,
+        motion,
+        inferenceSteps
+      ]);
+      
+      const response = { data: result.data };
       
       res.status(200).json({
         success: true,

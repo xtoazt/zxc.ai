@@ -118,7 +118,7 @@ module.exports = async function handler(req, res) {
             segmentPrompts[i],
             baseModel,
             motion,
-            inferenceSteps
+            inferenceSteps.replace('-Step', '')
           ]
         }, {
           headers: {
@@ -153,7 +153,7 @@ module.exports = async function handler(req, res) {
           prompt,
           baseModel,
           motion,
-          inferenceSteps
+          inferenceSteps.replace('-Step', '')
         ]
       }, {
         headers: {

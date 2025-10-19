@@ -106,39 +106,32 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center mb-4">
-          <Video className="w-8 h-8 text-white mr-3" />
-          <h2 className="text-3xl font-bold text-white">Text to Video</h2>
-        </div>
-        <p className="text-blue-100">
-          Enter a detailed prompt to generate an amazing video
-        </p>
+    <div className="space-y-8">
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-white mb-2">Text to Video</h2>
+        <p className="text-gray-400">Create videos from text descriptions</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Prompt Input */}
         <div>
-          <div className="flex items-center justify-between mb-2">
-            <label className="block text-white font-semibold">
-              Prompt
-            </label>
+          <div className="flex items-center justify-between mb-3">
+            <label className="text-sm font-medium text-gray-300">Prompt</label>
             <button
               type="button"
               onClick={enhancePrompt}
               disabled={isEnhancing || isGenerating || !prompt.trim()}
-              className="flex items-center px-3 py-1 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 text-white text-sm rounded-lg transition-colors"
+              className="flex items-center px-3 py-1 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-900 text-white text-xs rounded-md transition-colors border border-gray-700"
             >
               {isEnhancing ? (
                 <>
-                  <Brain className="w-4 h-4 mr-1 animate-spin" />
+                  <Brain className="w-3 h-3 mr-1 animate-spin" />
                   Enhancing...
                 </>
               ) : (
                 <>
-                  <Wand2 className="w-4 h-4 mr-1" />
-                  AI Enhance
+                  <Wand2 className="w-3 h-3 mr-1" />
+                  Enhance
                 </>
               )}
             </button>
@@ -146,15 +139,16 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Enter text to generate video... (e.g., Focus: Eiffel Tower (Animate: Clouds moving))"
-            className="w-full p-4 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent resize-none"
+            placeholder="Focus: Eiffel Tower (Animate: Clouds moving) (Shot from distance)"
+            className="w-full p-4 bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent resize-none rounded-lg"
             rows={4}
             disabled={isGenerating}
           />
           {enhancedPrompt && enhancedPrompt !== prompt && (
-            <div className="mt-2 p-2 bg-green-500/20 border border-green-500/50 rounded-lg">
-              <p className="text-green-200 text-sm">
-                ✨ AI Enhanced: {enhancedPrompt}
+            <div className="mt-3 p-3 bg-gray-800 border border-gray-700 rounded-lg">
+              <p className="text-gray-300 text-sm">
+                <CheckCircle className="w-4 h-4 inline mr-2 text-green-500" />
+                Enhanced: {enhancedPrompt}
               </p>
             </div>
           )}
@@ -162,9 +156,7 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
 
         {/* Video Length Control */}
         <div>
-          <label className="block text-white font-semibold mb-2">
-            Video Length
-          </label>
+          <label className="text-sm font-medium text-gray-300 mb-3 block">Duration</label>
           <div className="flex items-center space-x-4">
             <input
               type="range"
@@ -172,29 +164,25 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
               max="20"
               value={videoLength}
               onChange={(e) => setVideoLength(parseInt(e.target.value))}
-              className="flex-1 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              className="flex-1 h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer"
               disabled={isGenerating}
             />
-            <span className="text-white font-semibold min-w-[60px]">
+            <span className="text-white font-medium min-w-[40px] text-sm">
               {videoLength}s
             </span>
           </div>
-          <div className="flex justify-between text-xs text-blue-200 mt-1">
-            <span>2s (Fast)</span>
-            <span>20s (Long)</span>
-          </div>
           {videoLength > 2 && (
-            <div className="mt-2">
-              <label className="flex items-center text-white">
+            <div className="mt-3">
+              <label className="flex items-center text-gray-300">
                 <input
                   type="checkbox"
                   checked={generateLongVideo}
                   onChange={(e) => setGenerateLongVideo(e.target.checked)}
-                  className="mr-2 rounded"
+                  className="mr-2 rounded border-gray-600 bg-gray-800"
                   disabled={isGenerating}
                 />
                 <span className="text-sm">
-                  Generate {videoLength}s video using smart prompting (takes longer)
+                  Smart prompting for {videoLength}s video
                 </span>
               </label>
             </div>
@@ -205,13 +193,11 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
         <div className="grid md:grid-cols-3 gap-4">
           {/* Base Model */}
           <div>
-            <label className="block text-white font-semibold mb-2">
-              Base Model
-            </label>
+            <label className="text-sm font-medium text-gray-300 mb-2 block">Model</label>
             <select
               value={baseModel}
               onChange={(e) => setBaseModel(e.target.value)}
-              className="w-full p-3 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-full p-3 bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
               disabled={isGenerating}
             >
               {options.baseModels.map((model) => (
@@ -224,13 +210,11 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
 
           {/* Motion */}
           <div>
-            <label className="block text-white font-semibold mb-2">
-              Motion
-            </label>
+            <label className="text-sm font-medium text-gray-300 mb-2 block">Motion</label>
             <select
               value={motion}
               onChange={(e) => setMotion(e.target.value)}
-              className="w-full p-3 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-full p-3 bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
               disabled={isGenerating}
             >
               {options.motionOptions.map((option) => (
@@ -243,13 +227,11 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
 
           {/* Inference Steps */}
           <div>
-            <label className="block text-white font-semibold mb-2">
-              Inference Steps
-            </label>
+            <label className="text-sm font-medium text-gray-300 mb-2 block">Steps</label>
             <select
               value={inferenceSteps}
               onChange={(e) => setInferenceSteps(e.target.value)}
-              className="w-full p-3 rounded-xl bg-white/10 backdrop-blur-lg border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="w-full p-3 bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
               disabled={isGenerating}
             >
               {options.inferenceSteps.map((step) => (
@@ -262,25 +244,23 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
         </div>
 
         {/* Generate Button */}
-        <div className="text-center">
-          <button
-            type="submit"
-            disabled={isGenerating || !prompt.trim()}
-            className="btn-primary px-8 py-4 rounded-xl text-white font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center mx-auto"
-          >
-            {isGenerating ? (
-              <>
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3" />
-                Generating...
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-5 h-5 mr-3" />
-                Generate Video
-              </>
-            )}
-          </button>
-        </div>
+        <button
+          type="submit"
+          disabled={isGenerating || !prompt.trim()}
+          className="w-full bg-white hover:bg-gray-100 disabled:bg-gray-800 disabled:text-gray-500 text-black font-medium py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center"
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              Generating...
+            </>
+          ) : (
+            <>
+              <Video className="w-5 h-5 mr-2" />
+              Generate Video
+            </>
+          )}
+        </button>
       </form>
     </div>
   );

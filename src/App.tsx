@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2, Camera } from 'lucide-react';
+import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2, Camera, MessageCircle, Zap, Infinity, Clock, CheckCircle } from 'lucide-react';
 import VideoGenerator from './components/VideoGenerator';
 import ImageUpload from './components/ImageUpload';
 import VideoDisplay from './components/VideoDisplay';
@@ -61,94 +61,91 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-800">
-      {/* Free Banner */}
-      <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 text-center">
-        <div className="container mx-auto flex items-center justify-center space-x-2">
-          <span className="text-lg font-bold">🆓 100% FREE & UNLIMITED</span>
-          <span className="text-sm">•</span>
-          <span className="text-sm">No signup required</span>
-          <span className="text-sm">•</span>
-          <span className="text-sm">20-second videos</span>
-          <span className="text-sm">•</span>
-          <span className="text-sm">AI-powered</span>
+    <div className="min-h-screen bg-black text-white">
+      {/* Minimal Header */}
+      <div className="border-b border-gray-800">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-white rounded-sm flex items-center justify-center">
+                <Video className="w-5 h-5 text-black" />
+              </div>
+              <span className="text-xl font-medium">zxc.ai</span>
+            </div>
+            <div className="flex items-center space-x-6 text-sm text-gray-400">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span>Free</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Infinity className="w-4 h-4 text-blue-500" />
+                <span>Unlimited</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Clock className="w-4 h-4 text-purple-500" />
+                <span>20s Videos</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Header */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <Video className="w-12 h-12 text-white mr-3 animate-float" />
-            <h1 className="text-5xl font-bold text-white">
-              <span className="gradient-text">zxc.ai</span>
-            </h1>
-          </div>
-          <p className="text-xl text-blue-100 max-w-4xl mx-auto">
-            🚀 <strong>100% FREE & UNLIMITED</strong> AI Video Generation Platform - Create viral 20-second videos from text, images, and TikTok-style transitions
-          </p>
-          <div className="flex flex-wrap justify-center gap-4 mt-4">
-            <span className="bg-green-500/20 text-green-200 px-4 py-2 rounded-full text-sm font-semibold">🆓 FREE & UNLIMITED</span>
-            <span className="bg-purple-500/20 text-purple-200 px-3 py-1 rounded-full text-sm">✨ AI Enhancement</span>
-            <span className="bg-blue-500/20 text-blue-200 px-3 py-1 rounded-full text-sm">🎬 TikTok Transitions</span>
-            <span className="bg-green-500/20 text-green-200 px-3 py-1 rounded-full text-sm">🔗 20-Second Videos</span>
-            <span className="bg-yellow-500/20 text-yellow-200 px-3 py-1 rounded-full text-sm">🧠 AI Chat Assistant</span>
-          </div>
-        </div>
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
 
-        {/* Tab Navigation */}
-        <div className="flex justify-center mb-8">
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-2 flex">
+        {/* Minimal Tab Navigation */}
+        <div className="flex justify-center mb-12">
+          <div className="flex space-x-1 bg-gray-900 p-1 rounded-lg">
             <button
               onClick={() => setActiveTab('text')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center ${
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 flex items-center ${
                 activeTab === 'text'
-                  ? 'bg-white text-purple-600 shadow-lg'
-                  : 'text-white hover:bg-white/20'
+                  ? 'bg-white text-black'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Text to Video
+              <Sparkles className="w-4 h-4 mr-2" />
+              Text
             </button>
             <button
               onClick={() => setActiveTab('image')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center ${
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 flex items-center ${
                 activeTab === 'image'
-                  ? 'bg-white text-purple-600 shadow-lg'
-                  : 'text-white hover:bg-white/20'
+                  ? 'bg-white text-black'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
-              <ImageIcon className="w-5 h-5 mr-2" />
-              Image + Text to Video
+              <ImageIcon className="w-4 h-4 mr-2" />
+              Image
             </button>
             <button
               onClick={() => setActiveTab('suggestions')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center ${
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 flex items-center ${
                 activeTab === 'suggestions'
-                  ? 'bg-white text-purple-600 shadow-lg'
-                  : 'text-white hover:bg-white/20'
+                  ? 'bg-white text-black'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
-              <Brain className="w-5 h-5 mr-2" />
-              AI Suggestions
+              <Brain className="w-4 h-4 mr-2" />
+              Ideas
             </button>
             <button
               onClick={() => setActiveTab('transition')}
-              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center ${
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 flex items-center ${
                 activeTab === 'transition'
-                  ? 'bg-white text-purple-600 shadow-lg'
-                  : 'text-white hover:bg-white/20'
+                  ? 'bg-white text-black'
+                  : 'text-gray-400 hover:text-white'
               }`}
             >
-              <Camera className="w-5 h-5 mr-2" />
-              TikTok Transition
+              <Camera className="w-4 h-4 mr-2" />
+              Transition
             </button>
           </div>
         </div>
 
         {/* Main Content */}
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl">
+          <div className="bg-gray-900 rounded-xl border border-gray-800 p-8">
             {activeTab === 'text' ? (
               <VideoGenerator
                 onVideoGenerated={handleVideoGenerated}
@@ -199,53 +196,6 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        {/* Examples Section */}
-        <div className="mt-12 max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-white text-center mb-8">
-            🚀 Viral Video Examples (100% FREE & UNLIMITED)
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              "Focus: Person doing viral dance (Animate: Smooth transition to different locations) (Shot: Multiple angles)",
-              "Focus: Food preparation (Animate: Time-lapse cooking) (Shot: Close-up to wide)",
-              "Focus: Nature transformation (Animate: Season change) (Season: Summer to Winter)",
-              "Focus: City skyline (Animate: Day to night transition) (Shot from drone)",
-              "Focus: Person jumping (Animate: Slow motion leap) (Shot: Low angle)",
-              "Focus: Ocean waves (Animate: Crashing dramatically) (Shot: Close-up)"
-            ].map((example, index) => (
-              <div
-                key={index}
-                className="bg-white/10 backdrop-blur-lg rounded-xl p-4 hover:bg-white/20 transition-all duration-300 cursor-pointer group"
-                onClick={() => {
-                  setSelectedPrompt(example);
-                  setActiveTab('text');
-                }}
-              >
-                <div className="flex items-start justify-between">
-                  <p className="text-white text-sm font-medium group-hover:text-purple-200 transition-colors">{example}</p>
-                  <span className="text-green-400 text-xs font-bold">FREE</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {/* Viral Tips */}
-          <div className="mt-8 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl p-6 border border-white/20">
-            <h4 className="text-white font-bold text-lg mb-4 text-center">🔥 Viral Video Tips (100% FREE on zxc.ai)</h4>
-            <div className="grid md:grid-cols-2 gap-4 text-sm">
-              <div className="space-y-2">
-                <p className="text-blue-200">• <strong>Hook in first 3 seconds</strong> - Start with action</p>
-                <p className="text-blue-200">• <strong>Use trending sounds</strong> - Match popular audio</p>
-                <p className="text-blue-200">• <strong>Create transitions</strong> - Smooth scene changes</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-blue-200">• <strong>Tell a story</strong> - Beginning, middle, end</p>
-                <p className="text-blue-200">• <strong>Keep it short</strong> - 15-20 seconds max</p>
-                <p className="text-blue-200">• <strong>Use AI Enhancement</strong> - Better prompts = better videos</p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* AI Chat Widget */}

@@ -85,8 +85,22 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
         {isMultiSegment ? (
           <div className="space-y-4">
             <h4 className="text-white font-semibold">
-              Generated {videoUrls.length} Video Segments ({result.totalDuration || videoUrls.length * 2}s total)
+              {result.isTransition ? 'TikTok Transition' : 'Consecutive Video'} - {videoUrls.length} Segments ({result.totalDuration || videoUrls.length * 2}s total)
             </h4>
+            {result.isTransition && (
+              <div className="bg-blue-500/20 border border-blue-500/50 rounded-lg p-3">
+                <p className="text-blue-200 text-sm">
+                  🎬 This is a TikTok-style transition video. Each segment flows seamlessly into the next!
+                </p>
+              </div>
+            )}
+            {!result.isTransition && videoUrls.length > 1 && (
+              <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-3">
+                <p className="text-green-200 text-sm">
+                  🔗 This is a consecutive video. Each segment continues the story from the previous frame!
+                </p>
+              </div>
+            )}
             {videoUrls.map((video: any, index: number) => (
               <div key={index} className="space-y-2">
                 <h5 className="text-blue-200 text-sm font-medium">

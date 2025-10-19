@@ -16,24 +16,36 @@ function createSequentialPrompts(basePrompt, videoLength = 20) {
   const shot = shotMatch ? shotMatch[1].trim() : '';
   const season = seasonMatch ? seasonMatch[1].trim() : '';
   
-  // Create progressive prompts for smooth transitions
+  // Create progressive prompts for truly consecutive videos
   for (let i = 0; i < segments; i++) {
     const progress = i / (segments - 1);
     let segmentPrompt = `Focus: ${focus}`;
     
-    // Add progressive animation based on segment
+    // Create truly consecutive story progression
     if (segments > 1) {
-      if (animation.includes('moving') || animation.includes('running') || animation.includes('walking')) {
-        const direction = i < segments / 2 ? 'starting to' : 'continuing to';
-        segmentPrompt += ` (Animate: ${direction} ${animation})`;
+      if (animation.includes('jumping') || animation.includes('leaping')) {
+        if (i === 0) segmentPrompt += ` (Animate: ${animation} - beginning phase)`;
+        else if (i === segments - 1) segmentPrompt += ` (Animate: ${animation} - landing phase)`;
+        else segmentPrompt += ` (Animate: ${animation} - mid-air phase)`;
+      } else if (animation.includes('running') || animation.includes('walking')) {
+        if (i === 0) segmentPrompt += ` (Animate: ${animation} - starting to move)`;
+        else if (i === segments - 1) segmentPrompt += ` (Animate: ${animation} - reaching destination)`;
+        else segmentPrompt += ` (Animate: ${animation} - mid-movement)`;
       } else if (animation.includes('zoom')) {
-        const zoomType = i < segments / 2 ? 'beginning to zoom' : 'continuing zoom';
-        segmentPrompt += ` (Animate: ${zoomType} ${animation.replace('zoom', '').trim()})`;
+        const zoomDirection = animation.includes('out') ? 'out' : 'in';
+        if (i === 0) segmentPrompt += ` (Animate: beginning to zoom ${zoomDirection})`;
+        else if (i === segments - 1) segmentPrompt += ` (Animate: completing zoom ${zoomDirection})`;
+        else segmentPrompt += ` (Animate: continuing zoom ${zoomDirection})`;
       } else if (animation.includes('pan')) {
-        const panType = i < segments / 2 ? 'starting to pan' : 'continuing pan';
-        segmentPrompt += ` (Animate: ${panType} ${animation.replace('pan', '').trim()})`;
+        const panDirection = animation.includes('left') ? 'left' : animation.includes('right') ? 'right' : 'sideways';
+        if (i === 0) segmentPrompt += ` (Animate: starting to pan ${panDirection})`;
+        else if (i === segments - 1) segmentPrompt += ` (Animate: completing pan ${panDirection})`;
+        else segmentPrompt += ` (Animate: continuing pan ${panDirection})`;
       } else {
-        segmentPrompt += ` (Animate: ${animation} - segment ${i + 1})`;
+        // Generic progression
+        if (i === 0) segmentPrompt += ` (Animate: ${animation} - beginning)`;
+        else if (i === segments - 1) segmentPrompt += ` (Animate: ${animation} - conclusion)`;
+        else segmentPrompt += ` (Animate: ${animation} - progression)`;
       }
     } else {
       segmentPrompt += ` (Animate: ${animation})`;
@@ -43,9 +55,14 @@ function createSequentialPrompts(basePrompt, videoLength = 20) {
     if (shot) segmentPrompt += ` (Shot ${shot})`;
     if (season) segmentPrompt += ` (Season: ${season})`;
     
+    // Add frame continuity for truly consecutive videos
+    if (i === 0) segmentPrompt += ` (First frame of consecutive video)`;
+    else if (i === segments - 1) segmentPrompt += ` (Final frame of consecutive video)`;
+    else segmentPrompt += ` (Middle frame ${i} of consecutive video)`;
+    
     // Add continuity markers for smooth transitions
-    if (i > 0) segmentPrompt += ` (Continuation from previous segment)`;
-    if (i < segments - 1) segmentPrompt += ` (Smooth transition to next segment)`;
+    if (i > 0) segmentPrompt += ` (Last frame matches previous segment's end)`;
+    if (i < segments - 1) segmentPrompt += ` (First frame matches next segment's start)`;
     
     prompts.push(segmentPrompt);
   }

@@ -31,7 +31,8 @@
     "@types/react-dom": "^18.2.7",
     "tailwindcss": "^3.3.3",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.27"
+    "postcss": "^8.4.27",
+    "terser": "^5.19.4"
   },
   "browserslist": {
     "production": [

@@ -15,6 +15,9 @@
     },
     "api/ai-suggestions.js": {
       "maxDuration": 30
+    },
+    "api/generate-transition-video.js": {
+      "maxDuration": 300
     }
   }
 }

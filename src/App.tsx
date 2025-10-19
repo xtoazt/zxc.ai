@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2 } from 'lucide-react';
+import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2, Camera } from 'lucide-react';
 import VideoGenerator from './components/VideoGenerator';
 import ImageUpload from './components/ImageUpload';
 import VideoDisplay from './components/VideoDisplay';
 import AISuggestions from './components/AISuggestions';
+import TransitionVideo from './components/TransitionVideo';
 import './App.css';
 
 interface VideoResult {
@@ -19,7 +20,7 @@ interface Options {
 }
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'text' | 'image' | 'suggestions'>('text');
+  const [activeTab, setActiveTab] = useState<'text' | 'image' | 'suggestions' | 'transition'>('text');
   const [videoResult, setVideoResult] = useState<VideoResult | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState<Options>({
@@ -69,9 +70,15 @@ const App: React.FC = () => {
               <span className="gradient-text">zxc.ai</span>
             </h1>
           </div>
-          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            AI-Powered Video Generation Platform with LLM7 Enhancement - Create stunning videos from text and images
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+            AI-Powered Video Generation Platform with LLM7 Enhancement - Create stunning videos from text, images, and TikTok-style transitions
           </p>
+          <div className="flex flex-wrap justify-center gap-4 mt-4">
+            <span className="bg-purple-500/20 text-purple-200 px-3 py-1 rounded-full text-sm">✨ AI Enhancement</span>
+            <span className="bg-blue-500/20 text-blue-200 px-3 py-1 rounded-full text-sm">🎬 TikTok Transitions</span>
+            <span className="bg-green-500/20 text-green-200 px-3 py-1 rounded-full text-sm">🔗 Consecutive Videos</span>
+            <span className="bg-yellow-500/20 text-yellow-200 px-3 py-1 rounded-full text-sm">🧠 Smart Suggestions</span>
+          </div>
         </div>
 
         {/* Tab Navigation */}
@@ -110,6 +117,17 @@ const App: React.FC = () => {
               <Brain className="w-5 h-5 mr-2" />
               AI Suggestions
             </button>
+            <button
+              onClick={() => setActiveTab('transition')}
+              className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center ${
+                activeTab === 'transition'
+                  ? 'bg-white text-purple-600 shadow-lg'
+                  : 'text-white hover:bg-white/20'
+              }`}
+            >
+              <Camera className="w-5 h-5 mr-2" />
+              TikTok Transition
+            </button>
           </div>
         </div>
 
@@ -131,8 +149,15 @@ const App: React.FC = () => {
                 isGenerating={isGenerating}
                 options={options}
               />
-            ) : (
+            ) : activeTab === 'suggestions' ? (
               <AISuggestions onSuggestionSelect={handleSuggestionSelect} />
+            ) : (
+              <TransitionVideo
+                onVideoGenerated={handleVideoGenerated}
+                onGenerationStart={handleGenerationStart}
+                isGenerating={isGenerating}
+                options={options}
+              />
             )}
 
             {/* Video Display */}

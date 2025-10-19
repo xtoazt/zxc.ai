@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Video, Sparkles, Brain, Wand2 } from 'lucide-react';
+import { Video, Sparkles, Brain, Wand2, Loader2 } from 'lucide-react';
 
 interface VideoGeneratorProps {
   onVideoGenerated: (result: any) => void;

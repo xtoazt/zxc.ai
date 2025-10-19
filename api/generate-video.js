@@ -113,13 +113,17 @@ module.exports = async function handler(req, res) {
       for (let i = 0; i < segmentPrompts.length; i++) {
         console.log(`Generating segment ${i + 1}/${segmentPrompts.length}: ${segmentPrompts[i]}`);
         
+        const segmentApiData = [
+          segmentPrompts[i],
+          baseModel,
+          motion,
+          inferenceSteps.replace('-Step', '')
+        ];
+        
+        console.log(`Segment ${i + 1} API Request data:`, segmentApiData);
+        
         const response = await axios.post('https://sahaniji-instant-video.hf.space/api/predict', {
-          data: [
-            segmentPrompts[i],
-            baseModel,
-            motion,
-            inferenceSteps.replace('-Step', '')
-          ]
+          data: segmentApiData
         }, {
           headers: {
             'Content-Type': 'application/json'
@@ -148,13 +152,17 @@ module.exports = async function handler(req, res) {
       });
     } else {
       // Generate single 2-second video
+      const apiData = [
+        prompt,
+        baseModel,
+        motion,
+        inferenceSteps.replace('-Step', '')
+      ];
+      
+      console.log('API Request data:', apiData);
+      
       const response = await axios.post('https://sahaniji-instant-video.hf.space/api/predict', {
-        data: [
-          prompt,
-          baseModel,
-          motion,
-          inferenceSteps.replace('-Step', '')
-        ]
+        data: apiData
       }, {
         headers: {
           'Content-Type': 'application/json'
@@ -170,9 +178,17 @@ module.exports = async function handler(req, res) {
     }
   } catch (error) {
     console.error('Error generating video:', error);
+    console.error('Error details:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      config: error.config
+    });
+    
     res.status(500).json({ 
       error: 'Failed to generate video',
-      details: error.message 
+      details: error.message,
+      response: error.response?.data
     });
   }
 }

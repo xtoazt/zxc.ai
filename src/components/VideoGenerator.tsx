@@ -22,6 +22,8 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
   const [baseModel, setBaseModel] = useState('Realistic');
   const [motion, setMotion] = useState('');
   const [inferenceSteps, setInferenceSteps] = useState('4-Step');
+  const [videoLength, setVideoLength] = useState(2);
+  const [generateLongVideo, setGenerateLongVideo] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +46,8 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
           baseModel,
           motion,
           inferenceSteps,
+          videoLength,
+          generateLongVideo,
         }),
       });
 
@@ -84,6 +88,47 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
             rows={4}
             disabled={isGenerating}
           />
+        </div>
+
+        {/* Video Length Control */}
+        <div>
+          <label className="block text-white font-semibold mb-2">
+            Video Length
+          </label>
+          <div className="flex items-center space-x-4">
+            <input
+              type="range"
+              min="2"
+              max="20"
+              value={videoLength}
+              onChange={(e) => setVideoLength(parseInt(e.target.value))}
+              className="flex-1 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              disabled={isGenerating}
+            />
+            <span className="text-white font-semibold min-w-[60px]">
+              {videoLength}s
+            </span>
+          </div>
+          <div className="flex justify-between text-xs text-blue-200 mt-1">
+            <span>2s (Fast)</span>
+            <span>20s (Long)</span>
+          </div>
+          {videoLength > 2 && (
+            <div className="mt-2">
+              <label className="flex items-center text-white">
+                <input
+                  type="checkbox"
+                  checked={generateLongVideo}
+                  onChange={(e) => setGenerateLongVideo(e.target.checked)}
+                  className="mr-2 rounded"
+                  disabled={isGenerating}
+                />
+                <span className="text-sm">
+                  Generate {videoLength}s video using smart prompting (takes longer)
+                </span>
+              </label>
+            </div>
+          )}
         </div>
 
         {/* Options Grid */}

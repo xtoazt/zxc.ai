@@ -34,20 +34,32 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
     );
   }
 
-  // Extract video URL from the result
-  const getVideoUrl = () => {
+  // Extract video URL(s) from the result
+  const getVideoUrls = () => {
     if (result.data && result.data.length > 0) {
-      const videoData = result.data[0];
-      if (videoData && videoData.video) {
-        return videoData.video;
+      // Check if it's multiple segments (long video)
+      if (result.data[0].segment) {
+        // Multiple segments
+        return result.data.map((segment: any) => ({
+          segment: segment.segment,
+          url: segment.data && segment.data[0] ? segment.data[0].video : null,
+          prompt: segment.prompt
+        })).filter((item: any) => item.url);
+      } else {
+        // Single video
+        const videoData = result.data[0];
+        if (videoData && videoData.video) {
+          return [{ segment: 1, url: videoData.video, prompt: 'Single video' }];
+        }
       }
     }
-    return null;
+    return [];
   };
 
-  const videoUrl = getVideoUrl();
+  const videoUrls = getVideoUrls();
+  const isMultiSegment = videoUrls.length > 1;
 
-  if (!videoUrl) {
+  if (videoUrls.length === 0) {
     return (
       <div className="bg-yellow-500/20 border border-yellow-500/50 rounded-xl p-6">
         <div className="flex items-center mb-4">
@@ -69,17 +81,42 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
       </div>
 
       <div className="space-y-4">
-        {/* Video Player */}
-        <div className="video-container">
-          <video
-            src={videoUrl}
-            controls
-            className="w-full h-full"
-            poster=""
-          >
-            Your browser does not support the video tag.
-          </video>
-        </div>
+        {/* Video Player(s) */}
+        {isMultiSegment ? (
+          <div className="space-y-4">
+            <h4 className="text-white font-semibold">
+              Generated {videoUrls.length} Video Segments ({result.totalDuration || videoUrls.length * 2}s total)
+            </h4>
+            {videoUrls.map((video: any, index: number) => (
+              <div key={index} className="space-y-2">
+                <h5 className="text-blue-200 text-sm font-medium">
+                  Segment {video.segment}: {video.prompt.substring(0, 60)}...
+                </h5>
+                <div className="video-container">
+                  <video
+                    src={video.url}
+                    controls
+                    className="w-full h-full"
+                    poster=""
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="video-container">
+            <video
+              src={videoUrls[0]?.url}
+              controls
+              className="w-full h-full"
+              poster=""
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        )}
 
         {/* Video Info */}
         <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
@@ -88,39 +125,60 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
             {result.message || 'Your video has been generated successfully!'}
           </p>
           
-          {/* Download Button */}
-          <button
-            onClick={() => handleDownload(videoUrl, `generated-video-${Date.now()}.mp4`)}
-            className="btn-secondary px-6 py-3 rounded-xl text-white font-semibold flex items-center"
-          >
-            <Download className="w-5 h-5 mr-2" />
-            Download Video
-          </button>
+          {/* Download Buttons */}
+          {isMultiSegment ? (
+            <div className="space-y-2">
+              <button
+                onClick={() => {
+                  videoUrls.forEach((video: any, index: number) => {
+                    setTimeout(() => {
+                      handleDownload(video.url, `segment-${video.segment}-${Date.now()}.mp4`);
+                    }, index * 1000);
+                  });
+                }}
+                className="btn-secondary px-6 py-3 rounded-xl text-white font-semibold flex items-center"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Download All Segments
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => handleDownload(videoUrls[0]?.url, `generated-video-${Date.now()}.mp4`)}
+              className="btn-secondary px-6 py-3 rounded-xl text-white font-semibold flex items-center"
+            >
+              <Download className="w-5 h-5 mr-2" />
+              Download Video
+            </button>
+          )}
         </div>
 
         {/* Additional Actions */}
         <div className="flex flex-wrap gap-3">
           <button
             onClick={() => {
-              const video = document.querySelector('video');
-              if (video) {
-                video.play();
-              }
+              const videos = document.querySelectorAll('video');
+              videos.forEach(video => {
+                if (video) {
+                  video.play();
+                }
+              });
             }}
             className="btn-secondary px-4 py-2 rounded-lg text-white font-medium flex items-center"
           >
             <Play className="w-4 h-4 mr-2" />
-            Play
+            Play All
           </button>
           
           <button
             onClick={() => {
-              navigator.clipboard.writeText(videoUrl);
-              alert('Video URL copied to clipboard!');
+              const urls = videoUrls.map((v: any) => v.url).join('\n');
+              navigator.clipboard.writeText(urls);
+              alert('Video URL(s) copied to clipboard!');
             }}
             className="btn-secondary px-4 py-2 rounded-lg text-white font-medium"
           >
-            Copy URL
+            Copy URLs
           </button>
         </div>
       </div>

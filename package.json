@@ -44,7 +44,4 @@
       "last 1 safari version"
     ]
   },
-  "overrides": {
-    "typescript": "^4.9.5"
-  }
 }

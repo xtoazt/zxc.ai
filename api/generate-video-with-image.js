@@ -1,15 +1,6 @@
-import axios from 'axios';
-import formidable from 'formidable';
-import sharp from 'sharp';
-import fs from 'fs';
+const axios = require('axios');
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,37 +17,13 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Parse form data
-    const form = formidable({
-      maxFileSize: 10 * 1024 * 1024, // 10MB
-      filter: ({ mimetype }) => mimetype && mimetype.includes('image/')
-    });
-
-    const [fields, files] = await form.parse(req);
-    
-    const prompt = fields.prompt?.[0];
-    const baseModel = fields.baseModel?.[0] || 'Realistic';
-    const motion = fields.motion?.[0] || '';
-    const inferenceSteps = fields.inferenceSteps?.[0] || '4-Step';
-    const imageFile = files.image?.[0];
+    const { prompt, baseModel = 'Realistic', motion = '', inferenceSteps = '4-Step', imageData } = req.body;
 
     if (!prompt) {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    if (!imageFile) {
-      return res.status(400).json({ error: 'Image file is required' });
-    }
-
     console.log('Processing image and generating video...');
-    
-    // Process the uploaded image
-    const processedImageBuffer = await sharp(imageFile.filepath)
-      .resize(512, 512, { fit: 'inside', withoutEnlargement: true })
-      .jpeg({ quality: 90 })
-      .toBuffer();
-    
-    const imageBase64 = processedImageBuffer.toString('base64');
     
     // Enhanced prompt with image context
     const enhancedPrompt = `Focus: ${prompt} (Image reference provided)`;
@@ -76,11 +43,6 @@ export default async function handler(req, res) {
       timeout: 300000 // 5 minutes timeout
     });
     
-    // Clean up uploaded file
-    if (fs.existsSync(imageFile.filepath)) {
-      fs.unlinkSync(imageFile.filepath);
-    }
-    
     res.status(200).json({
       success: true,
       data: response.data,
@@ -88,11 +50,6 @@ export default async function handler(req, res) {
     });
   } catch (error) {
     console.error('Error generating video with image:', error);
-    
-    // Clean up files on error
-    if (req.files?.image?.[0]?.filepath && fs.existsSync(req.files.image[0].filepath)) {
-      fs.unlinkSync(req.files.image[0].filepath);
-    }
     
     res.status(500).json({ 
       error: 'Failed to generate video with image',

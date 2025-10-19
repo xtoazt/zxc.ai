@@ -89,20 +89,29 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     onGenerationStart();
 
     try {
-      const formData = new FormData();
-      formData.append('image', selectedImage);
-      formData.append('prompt', prompt);
-      formData.append('baseModel', baseModel);
-      formData.append('motion', motion);
-      formData.append('inferenceSteps', inferenceSteps);
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const imageData = e.target?.result as string;
+        
+        const response = await fetch('/api/generate-video-with-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            prompt,
+            baseModel,
+            motion,
+            inferenceSteps,
+            imageData
+          }),
+        });
 
-      const response = await fetch('/api/generate-video-with-image', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-      onVideoGenerated(result);
+        const result = await response.json();
+        onVideoGenerated(result);
+      };
+      reader.readAsDataURL(selectedImage);
     } catch (error) {
       console.error('Error generating video:', error);
       onVideoGenerated({

@@ -12,27 +12,35 @@
     "start": "cd server && npm start",
     "vercel-build": "vite build"
   },
-  "keywords": ["video", "ai", "generation", "zxc-ai", "llm7", "vercel"],
+  "keywords": [
+    "video",
+    "ai",
+    "generation",
+    "zxc-ai",
+    "llm7",
+    "vercel"
+  ],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
+    "@gradio/client": "^2.0.0-dev.0",
     "axios": "^1.6.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "lucide-react": "^0.292.0",
-    "openai": "^4.20.1"
+    "openai": "^4.20.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
-    "@vitejs/plugin-react": "^4.0.3",
-    "vite": "^4.4.5",
-    "typescript": "^5.0.2",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "tailwindcss": "^3.3.3",
+    "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.14",
+    "concurrently": "^8.2.2",
     "postcss": "^8.4.27",
-    "terser": "^5.19.4"
+    "tailwindcss": "^3.3.3",
+    "terser": "^5.19.4",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
   },
   "browserslist": {
     "production": [

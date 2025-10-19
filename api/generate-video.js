@@ -1,4 +1,4 @@
-const axios = require('axios');
+const { client } = require('@gradio/client');
 
 // Smart prompting system for longer videos
 function createSequentialPrompts(basePrompt, videoLength = 20) {
@@ -122,14 +122,10 @@ module.exports = async function handler(req, res) {
         
         console.log(`Segment ${i + 1} API Request data:`, segmentApiData);
         
-        const response = await axios.post('https://sahaniji-instant-video.hf.space/api/predict', {
-          data: segmentApiData
-        }, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          timeout: 300000 // 5 minutes timeout per segment
-        });
+        const app = await client("SahaniJi/Instant-Video");
+        const result = await app.predict("/instant_video", segmentApiData);
+        
+        const response = { data: result.data };
         
         videoSegments.push({
           segment: i + 1,
@@ -161,14 +157,10 @@ module.exports = async function handler(req, res) {
       
       console.log('API Request data:', apiData);
       
-      const response = await axios.post('https://sahaniji-instant-video.hf.space/api/predict', {
-        data: apiData
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        timeout: 300000 // 5 minutes timeout
-      });
+      const app = await client("SahaniJi/Instant-Video");
+      const result = await app.predict("/instant_video", apiData);
+      
+      const response = { data: result.data };
 
       res.status(200).json({
         success: true,

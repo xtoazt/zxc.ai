@@ -5,6 +5,7 @@ import ImageUpload from './components/ImageUpload';
 import VideoDisplay from './components/VideoDisplay';
 import AISuggestions from './components/AISuggestions';
 import TransitionVideo from './components/TransitionVideo';
+import AIChatWidget from './components/AIChatWidget';
 import './App.css';
 
 interface VideoResult {
@@ -61,6 +62,19 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-800">
+      {/* Free Banner */}
+      <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 text-center">
+        <div className="container mx-auto flex items-center justify-center space-x-2">
+          <span className="text-lg font-bold">🆓 100% FREE & UNLIMITED</span>
+          <span className="text-sm">•</span>
+          <span className="text-sm">No signup required</span>
+          <span className="text-sm">•</span>
+          <span className="text-sm">20-second videos</span>
+          <span className="text-sm">•</span>
+          <span className="text-sm">AI-powered</span>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8">
@@ -70,14 +84,15 @@ const App: React.FC = () => {
               <span className="gradient-text">zxc.ai</span>
             </h1>
           </div>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            AI-Powered Video Generation Platform with LLM7 Enhancement - Create stunning videos from text, images, and TikTok-style transitions
+          <p className="text-xl text-blue-100 max-w-4xl mx-auto">
+            🚀 <strong>100% FREE & UNLIMITED</strong> AI Video Generation Platform - Create viral 20-second videos from text, images, and TikTok-style transitions
           </p>
           <div className="flex flex-wrap justify-center gap-4 mt-4">
+            <span className="bg-green-500/20 text-green-200 px-4 py-2 rounded-full text-sm font-semibold">🆓 FREE & UNLIMITED</span>
             <span className="bg-purple-500/20 text-purple-200 px-3 py-1 rounded-full text-sm">✨ AI Enhancement</span>
             <span className="bg-blue-500/20 text-blue-200 px-3 py-1 rounded-full text-sm">🎬 TikTok Transitions</span>
-            <span className="bg-green-500/20 text-green-200 px-3 py-1 rounded-full text-sm">🔗 Consecutive Videos</span>
-            <span className="bg-yellow-500/20 text-yellow-200 px-3 py-1 rounded-full text-sm">🧠 Smart Suggestions</span>
+            <span className="bg-green-500/20 text-green-200 px-3 py-1 rounded-full text-sm">🔗 20-Second Videos</span>
+            <span className="bg-yellow-500/20 text-yellow-200 px-3 py-1 rounded-full text-sm">🧠 AI Chat Assistant</span>
           </div>
         </div>
 
@@ -187,31 +202,54 @@ const App: React.FC = () => {
         {/* Examples Section */}
         <div className="mt-12 max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-white text-center mb-8">
-            Example Prompts
+            🚀 Viral Video Examples (100% FREE & UNLIMITED)
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              "Focus: Eiffel Tower (Animate: Clouds moving)",
-              "Focus: Trees In forest (Animate: Lion running)",
-              "Focus: Astronaut in Space",
-              "Focus: Group of Birds in sky (Animate: Birds Moving) (Shot From distance)",
-              "Focus: Statue of liberty (Shot from Drone) (Animate: Drone coming toward statue)",
-              "Focus: Panda in Forest (Animate: Drinking Tea)"
+              "Focus: Person doing viral dance (Animate: Smooth transition to different locations) (Shot: Multiple angles)",
+              "Focus: Food preparation (Animate: Time-lapse cooking) (Shot: Close-up to wide)",
+              "Focus: Nature transformation (Animate: Season change) (Season: Summer to Winter)",
+              "Focus: City skyline (Animate: Day to night transition) (Shot from drone)",
+              "Focus: Person jumping (Animate: Slow motion leap) (Shot: Low angle)",
+              "Focus: Ocean waves (Animate: Crashing dramatically) (Shot: Close-up)"
             ].map((example, index) => (
               <div
                 key={index}
-                className="bg-white/10 backdrop-blur-lg rounded-xl p-4 hover:bg-white/20 transition-all duration-300 cursor-pointer"
+                className="bg-white/10 backdrop-blur-lg rounded-xl p-4 hover:bg-white/20 transition-all duration-300 cursor-pointer group"
                 onClick={() => {
-                  // You could implement auto-fill functionality here
-                  console.log('Example clicked:', example);
+                  setSelectedPrompt(example);
+                  setActiveTab('text');
                 }}
               >
-                <p className="text-white text-sm font-medium">{example}</p>
+                <div className="flex items-start justify-between">
+                  <p className="text-white text-sm font-medium group-hover:text-purple-200 transition-colors">{example}</p>
+                  <span className="text-green-400 text-xs font-bold">FREE</span>
+                </div>
               </div>
             ))}
           </div>
+          
+          {/* Viral Tips */}
+          <div className="mt-8 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl p-6 border border-white/20">
+            <h4 className="text-white font-bold text-lg mb-4 text-center">🔥 Viral Video Tips (100% FREE on zxc.ai)</h4>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div className="space-y-2">
+                <p className="text-blue-200">• <strong>Hook in first 3 seconds</strong> - Start with action</p>
+                <p className="text-blue-200">• <strong>Use trending sounds</strong> - Match popular audio</p>
+                <p className="text-blue-200">• <strong>Create transitions</strong> - Smooth scene changes</p>
+              </div>
+              <div className="space-y-2">
+                <p className="text-blue-200">• <strong>Tell a story</strong> - Beginning, middle, end</p>
+                <p className="text-blue-200">• <strong>Keep it short</strong> - 15-20 seconds max</p>
+                <p className="text-blue-200">• <strong>Use AI Enhancement</strong> - Better prompts = better videos</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* AI Chat Widget */}
+      <AIChatWidget onSuggestionSelect={handleSuggestionSelect} />
     </div>
   );
 };

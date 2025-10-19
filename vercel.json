@@ -18,6 +18,9 @@
     },
     "api/generate-transition-video.js": {
       "maxDuration": 300
+    },
+    "api/ai-chat.js": {
+      "maxDuration": 30
     }
   }
 }

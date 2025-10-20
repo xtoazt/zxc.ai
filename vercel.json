@@ -21,6 +21,12 @@
     },
     "api/ai-chat.js": {
       "maxDuration": 30
+    },
+    "api/generate-video-vider.js": {
+      "maxDuration": 300
+    },
+    "api/chatglm-chat.js": {
+      "maxDuration": 60
     }
   }
 }

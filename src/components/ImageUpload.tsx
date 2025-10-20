@@ -91,37 +91,53 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     onGenerationStart();
 
     try {
-      // Convert image to base64
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        const imageData = e.target?.result as string;
-        
-        const response = await fetch('/api/generate-video-with-image', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt,
-            baseModel,
-            motion,
-            inferenceSteps,
-            imageData,
-            videoLength,
-            generateLongVideo
-          }),
-        });
+      // Upload image to a temporary hosting service first
+      const imageUrl = await uploadImageToTempHost(selectedImage);
+      
+      if (!imageUrl) {
+        throw new Error('Failed to upload image');
+      }
 
-        const result = await response.json();
-        onVideoGenerated(result);
-      };
-      reader.readAsDataURL(selectedImage);
+      // Use Vider.ai for image-to-video generation
+      const response = await fetch('/api/generate-video-vider', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageUrl,
+          prompt,
+          aspectRatio: 1, // Default aspect ratio
+          videoLength
+        }),
+      });
+
+      const result = await response.json();
+      onVideoGenerated(result);
     } catch (error) {
       console.error('Error generating video:', error);
       onVideoGenerated({
         success: false,
         error: 'Failed to generate video. Please try again.',
       });
+    }
+  };
+
+  // Function to upload image to a temporary hosting service
+  const uploadImageToTempHost = async (file: File): Promise<string | null> => {
+    try {
+      // For now, we'll use a simple base64 data URL
+      // In production, you might want to use a proper image hosting service
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          resolve(e.target?.result as string);
+        };
+        reader.readAsDataURL(file);
+      });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      return null;
     }
   };
 

@@ -11,6 +11,9 @@ interface VideoDisplayProps {
 }
 
 const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
+  // Debug logging
+  console.log('VideoDisplay received result:', result);
+
   const handleDownload = (videoUrl: string, filename: string) => {
     const link = document.createElement('a');
     link.href = videoUrl;
@@ -36,23 +39,50 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
 
   // Extract video URL(s) from the result
   const getVideoUrls = () => {
-    if (result.data && result.data.length > 0) {
-      // Check if it's multiple segments (long video)
-      if (result.data[0].segment) {
-        // Multiple segments
-        return result.data.map((segment: any) => ({
-          segment: segment.segment,
-          url: segment.data && segment.data[0] ? segment.data[0].video : null,
-          prompt: segment.prompt
-        })).filter((item: any) => item.url);
-      } else {
-        // Single video
-        const videoData = result.data[0];
-        if (videoData && videoData.video) {
-          return [{ segment: 1, url: videoData.video, prompt: 'Single video' }];
+    console.log('Extracting video URLs from result:', result);
+    
+    // Handle Vider.ai results (single video URL)
+    if (result.provider === 'vider-ai' && result.data) {
+      console.log('Vider.ai result detected:', result.data);
+      return [{ segment: 1, url: result.data, prompt: 'Image-to-video generated with Vider.ai' }];
+    }
+    
+    // Handle Instant Video results (multiple segments or single video)
+    if (result.data) {
+      console.log('Processing Instant Video result data:', result.data);
+      
+      // Check if result.data is an array
+      if (Array.isArray(result.data) && result.data.length > 0) {
+        // Check if it's multiple segments (long video)
+        if (result.data[0].segment) {
+          // Multiple segments
+          const segments = result.data.map((segment: any) => ({
+            segment: segment.segment,
+            url: segment.data && segment.data[0] ? segment.data[0].video : null,
+            prompt: segment.prompt
+          })).filter((item: any) => item.url);
+          console.log('Multiple segments found:', segments);
+          return segments;
+        } else {
+          // Single video in array format
+          const videoData = result.data[0];
+          if (videoData && videoData.video) {
+            console.log('Single video in array format:', videoData.video);
+            return [{ segment: 1, url: videoData.video, prompt: 'Single video' }];
+          }
         }
+      } else if (typeof result.data === 'string') {
+        // Direct video URL string
+        console.log('Direct video URL string:', result.data);
+        return [{ segment: 1, url: result.data, prompt: 'Single video' }];
+      } else if (result.data && result.data.video) {
+        // Single video object
+        console.log('Single video object:', result.data.video);
+        return [{ segment: 1, url: result.data.video, prompt: 'Single video' }];
       }
     }
+    
+    console.log('No video URLs found in result');
     return [];
   };
 
@@ -66,9 +96,15 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
           <AlertCircle className="w-6 h-6 text-yellow-400 mr-3" />
           <h3 className="text-xl font-semibold text-yellow-400">No Video Generated</h3>
         </div>
-        <p className="text-yellow-300">
+        <p className="text-yellow-300 mb-4">
           The generation completed but no video was returned. Please try again with different parameters.
         </p>
+        <div className="bg-black/50 rounded-lg p-4">
+          <h4 className="text-white font-semibold mb-2">Debug Info:</h4>
+          <pre className="text-xs text-gray-300 overflow-auto">
+            {JSON.stringify(result, null, 2)}
+          </pre>
+        </div>
       </div>
     );
   }
@@ -112,9 +148,15 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
                     controls
                     className="w-full h-full"
                     poster=""
+                    onLoadStart={() => console.log('Video loading started:', video.url)}
+                    onLoadedData={() => console.log('Video data loaded:', video.url)}
+                    onError={(e) => console.error('Video load error:', e, video.url)}
                   >
                     Your browser does not support the video tag.
                   </video>
+                  <div className="mt-2 text-xs text-gray-400">
+                    Video URL: {video.url}
+                  </div>
                 </div>
               </div>
             ))}
@@ -126,9 +168,15 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
               controls
               className="w-full h-full"
               poster=""
+              onLoadStart={() => console.log('Video loading started:', videoUrls[0]?.url)}
+              onLoadedData={() => console.log('Video data loaded:', videoUrls[0]?.url)}
+              onError={(e) => console.error('Video load error:', e, videoUrls[0]?.url)}
             >
               Your browser does not support the video tag.
             </video>
+            <div className="mt-2 text-xs text-gray-400">
+              Video URL: {videoUrls[0]?.url}
+            </div>
           </div>
         )}
 

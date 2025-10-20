@@ -1,32 +1,36 @@
 #!/bin/bash
 
-echo "🚀 Deploying Instant Video Generator to Vercel..."
+echo "🚀 zxc.ai Deployment Script"
+echo "=========================="
 
 # Check if Vercel CLI is installed
 if ! command -v vercel &> /dev/null; then
-    echo "❌ Vercel CLI not found. Installing..."
+    echo "📦 Installing Vercel CLI..."
     npm install -g vercel
 fi
 
-# Check if user is logged in
-if ! vercel whoami &> /dev/null; then
-    echo "🔐 Please log in to Vercel:"
-    vercel login
-fi
+# Clean previous builds
+echo "🧹 Cleaning previous builds..."
+rm -rf build/
+rm -rf node_modules/.vite/
 
+# Install dependencies
 echo "📦 Installing dependencies..."
 npm install
 
-echo "🏗️ Building client..."
-cd client
-npm install
+# Build the project
+echo "🔨 Building project..."
 npm run build
-cd ..
 
-echo "🚀 Deploying to Vercel..."
-vercel --prod
-
-echo "✅ Deployment complete!"
-echo ""
-echo "Your app is now live on Vercel!"
-echo "Check your Vercel dashboard for the deployment URL."
+# Check if build was successful
+if [ -d "build" ]; then
+    echo "✅ Build completed successfully!"
+    echo "📁 Build directory contents:"
+    ls -la build/
+    echo ""
+    echo "🚀 Deploying to Vercel..."
+    vercel --prod
+else
+    echo "❌ Build failed!"
+    exit 1
+fi

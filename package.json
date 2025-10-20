@@ -23,7 +23,7 @@
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
-    "@gradio/client": "^2.0.0-dev.0",
+    "@gradio/client": "^0.15.0",
     "axios": "^1.6.0",
     "lucide-react": "^0.292.0",
     "openai": "^4.20.1",

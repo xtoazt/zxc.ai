@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Video, Sparkles, Brain, Wand2, Loader2 } from 'lucide-react';
+import { Video, Sparkles, Brain, Wand2, Loader2, CheckCircle } from 'lucide-react';
+import { ShimmerButton } from './ui/shimmer-button';
+import { MagicCard } from './ui/magic-card';
+import { BorderBeam } from './ui/border-beam';
 
 interface VideoGeneratorProps {
   onVideoGenerated: (result: any) => void;
@@ -106,49 +109,51 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="text-center">
-        <h2 className="text-2xl font-semibold text-white mb-2">Text to Video</h2>
-        <p className="text-gray-400">Create videos from text descriptions</p>
+        <h2 className="text-3xl font-semibold text-white mb-3">Text to Video</h2>
+        <p className="text-gray-400 text-lg">Create videos from text descriptions</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-8">
         {/* Prompt Input */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <label className="text-sm font-medium text-gray-300">Prompt</label>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <label className="text-base font-medium text-gray-300">Prompt</label>
             <button
               type="button"
               onClick={enhancePrompt}
               disabled={isEnhancing || isGenerating || !prompt.trim()}
-              className="flex items-center px-3 py-1 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-900 text-white text-xs rounded-md transition-colors border border-gray-700"
+              className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 disabled:bg-gray-900 text-white text-sm rounded-lg transition-colors border border-gray-700"
             >
               {isEnhancing ? (
                 <>
-                  <Brain className="w-3 h-3 mr-1 animate-spin" />
+                  <Brain className="w-4 h-4 mr-2 animate-spin" />
                   Enhancing...
                 </>
               ) : (
                 <>
-                  <Wand2 className="w-3 h-3 mr-1" />
+                  <Wand2 className="w-4 h-4 mr-2" />
                   Enhance
                 </>
               )}
             </button>
           </div>
-          <textarea
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Focus: Eiffel Tower (Animate: Clouds moving) (Shot from distance)"
-            className="w-full p-4 bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent resize-none rounded-lg"
-            rows={4}
-            disabled={isGenerating}
-          />
+          <MagicCard className="rounded-xl" gradientFrom="#3B82F6" gradientTo="#8B5CF6">
+            <textarea
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="Focus: Eiffel Tower (Animate: Clouds moving) (Shot from distance)"
+              className="w-full p-5 bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none rounded-xl relative z-10"
+              rows={5}
+              disabled={isGenerating}
+            />
+          </MagicCard>
           {enhancedPrompt && enhancedPrompt !== prompt && (
-            <div className="mt-3 p-3 bg-gray-800 border border-gray-700 rounded-lg">
-              <p className="text-gray-300 text-sm">
-                <CheckCircle className="w-4 h-4 inline mr-2 text-green-500" />
-                Enhanced: {enhancedPrompt}
+            <div className="mt-4 p-4 bg-green-500/10 border border-green-500/30 rounded-xl">
+              <p className="text-gray-300 text-sm flex items-center">
+                <CheckCircle className="w-5 h-5 mr-2 text-green-500 flex-shrink-0" />
+                <span>Enhanced: {enhancedPrompt}</span>
               </p>
             </div>
           )}
@@ -244,23 +249,26 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
         </div>
 
         {/* Generate Button */}
-        <button
+        <ShimmerButton
           type="submit"
           disabled={isGenerating || !prompt.trim()}
-          className="w-full bg-white hover:bg-gray-100 disabled:bg-gray-800 disabled:text-gray-500 text-black font-medium py-3 px-6 rounded-lg transition-all duration-200 flex items-center justify-center"
+          className="w-full font-semibold py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          background="rgba(59, 130, 246, 0.1)"
+          shimmerColor="#ffffff"
+          borderRadius="12px"
         >
           {isGenerating ? (
             <>
-              <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+              <Loader2 className="w-5 h-5 mr-3 animate-spin" />
               Generating...
             </>
           ) : (
             <>
-              <Video className="w-5 h-5 mr-2" />
+              <Video className="w-5 h-5 mr-3" />
               Generate Video
             </>
           )}
-        </button>
+        </ShimmerButton>
       </form>
     </div>
   );

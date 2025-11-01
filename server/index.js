@@ -193,11 +193,11 @@ app.post('/api/generate-video-with-image', upload.single('image'), async (req, r
 app.get('/api/options', (req, res) => {
   res.json({
     baseModels: [
-      'Realistic',
-      'Cartoon',
-      'Anime',
-      '3D',
-      'Sketch'
+      'zxc-1',
+      'zxc-pear',
+      'zxc-pear5',
+      'zxc-turtle',
+      'zxc-wave'
     ],
     motionOptions: [
       '',

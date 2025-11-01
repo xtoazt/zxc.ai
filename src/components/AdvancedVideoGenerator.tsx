@@ -62,7 +62,7 @@ const AdvancedVideoGenerator: React.FC<AdvancedVideoGeneratorProps> = ({
         await new Promise(resolve => setTimeout(resolve, 800));
       }
 
-      setStatusMessage(`Generating with ${selectedProvider === 'huggingface' ? 'Hugging Face' : selectedProvider === 'replicate' ? 'Replicate' : 'Pexels'}...`);
+      setStatusMessage(`Generating with ${selectedProvider === 'huggingface' ? 'zxc-bolt' : selectedProvider === 'replicate' ? 'zxc-zen' : 'zxc-flash'}...`);
       setProgress(95);
 
       const response = await fetch(apiEndpoint, {
@@ -110,10 +110,10 @@ const AdvancedVideoGenerator: React.FC<AdvancedVideoGeneratorProps> = ({
       <div className="text-center mb-8">
         <div className="flex items-center justify-center mb-4">
           <Zap className="w-8 h-8 text-yellow-400 mr-3" />
-          <h2 className="text-3xl font-bold text-white">Advanced AI Video Generator</h2>
+          <h2 className="text-3xl font-bold text-white">zxc-nex Video Generator</h2>
         </div>
         <p className="text-blue-100">
-          Generate videos using cutting-edge AI models: Hugging Face, Replicate, or Pexels
+          Generate videos using cutting-edge ZXC models: zxc-bolt, zxc-zen, or zxc-flash
         </p>
       </div>
 
@@ -131,7 +131,7 @@ const AdvancedVideoGenerator: React.FC<AdvancedVideoGeneratorProps> = ({
             }`}
           >
             <Brain className={`w-6 h-6 mx-auto mb-2 ${selectedProvider === 'huggingface' ? 'text-blue-400' : 'text-gray-400'}`} />
-            <h3 className="font-semibold text-sm text-white">Hugging Face</h3>
+            <h3 className="font-semibold text-sm text-white">zxc-bolt</h3>
             <p className="text-xs text-gray-400 mt-1">Text-to-Video AI</p>
           </button>
 
@@ -145,7 +145,7 @@ const AdvancedVideoGenerator: React.FC<AdvancedVideoGeneratorProps> = ({
             }`}
           >
             <Film className={`w-6 h-6 mx-auto mb-2 ${selectedProvider === 'replicate' ? 'text-green-400' : 'text-gray-400'}`} />
-            <h3 className="font-semibold text-sm text-white">Replicate</h3>
+            <h3 className="font-semibold text-sm text-white">zxc-zen</h3>
             <p className="text-xs text-gray-400 mt-1">Stable Video Diffusion</p>
           </button>
 
@@ -159,7 +159,7 @@ const AdvancedVideoGenerator: React.FC<AdvancedVideoGeneratorProps> = ({
             }`}
           >
             <Video className={`w-6 h-6 mx-auto mb-2 ${selectedProvider === 'pexels' ? 'text-orange-400' : 'text-gray-400'}`} />
-            <h3 className="font-semibold text-sm text-white">Pexels</h3>
+            <h3 className="font-semibold text-sm text-white">zxc-flash</h3>
             <p className="text-xs text-gray-400 mt-1">Real Video Library</p>
           </button>
         </div>
@@ -236,7 +236,7 @@ const AdvancedVideoGenerator: React.FC<AdvancedVideoGeneratorProps> = ({
             </select>
           </div>
 
-          {/* FPS (only for Hugging Face) */}
+          {/* FPS (only for zxc-bolt) */}
           {selectedProvider === 'huggingface' && (
             <div>
               <label className="block text-white font-semibold mb-2">

@@ -38,7 +38,7 @@ const App: React.FC = () => {
   const [videoResult, setVideoResult] = useState<VideoResult | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState<Options>({
-    baseModels: ['Realistic'],
+    baseModels: ['zxc-1'],
     motionOptions: [''],
     inferenceSteps: ['4-Step']
   });
@@ -164,7 +164,7 @@ const App: React.FC = () => {
                   <Rocket className={`w-7 h-7 ${activeTab === 'advanced' ? 'text-yellow-400' : 'text-gray-400 group-hover:text-yellow-400'}`} />
                 </div>
                 <div className="text-center">
-                  <h3 className="font-semibold text-base text-white">Advanced AI</h3>
+                  <h3 className="font-semibold text-base text-white">zxc-nex</h3>
                   <p className="text-xs text-gray-400 mt-2">Multi-Provider</p>
                   <span className="inline-block mt-2 px-2 py-0.5 text-xs bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-full border border-yellow-500/30">NEW</span>
                 </div>
@@ -183,7 +183,7 @@ const App: React.FC = () => {
                 <Wand2 className={`w-6 h-6 ${activeTab === 'gemini' ? 'text-purple-400' : 'text-gray-400 group-hover:text-purple-400'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">Gemini AI</h3>
+                <h3 className="font-semibold text-sm text-white">zxc-moon</h3>
                 <p className="text-xs text-gray-400 mt-1">Prompt Enhancement</p>
                 <span className="inline-block mt-1 px-2 py-0.5 text-xs bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full border border-purple-500/30">NEW</span>
               </div>
@@ -201,8 +201,8 @@ const App: React.FC = () => {
                 <Sparkles className={`w-6 h-6 ${activeTab === 'text' ? 'text-blue-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">Text to Video</h3>
-                <p className="text-xs text-gray-400 mt-1">Instant Video API</p>
+                <h3 className="font-semibold text-sm text-white">zxc-1</h3>
+                <p className="text-xs text-gray-400 mt-1">Instant Video</p>
               </div>
             </button>
 
@@ -218,7 +218,7 @@ const App: React.FC = () => {
                 <Video className={`w-6 h-6 ${activeTab === 'sora2' ? 'text-yellow-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">Sora-2</h3>
+                <h3 className="font-semibold text-sm text-white">zxc-star</h3>
                 <p className="text-xs text-gray-400 mt-1">Premium Model</p>
               </div>
             </button>
@@ -235,7 +235,7 @@ const App: React.FC = () => {
                 <Video className={`w-6 h-6 ${activeTab === 'zeroscope' ? 'text-blue-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">ZeroScope</h3>
+                <h3 className="font-semibold text-sm text-white">zxc-pear</h3>
                 <p className="text-xs text-gray-400 mt-1">Fast Generation</p>
               </div>
             </button>
@@ -252,7 +252,7 @@ const App: React.FC = () => {
                 <Video className={`w-6 h-6 ${activeTab === 'cogvideox' ? 'text-purple-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">CogVideoX</h3>
+                <h3 className="font-semibold text-sm text-white">zxc-turtle</h3>
                 <p className="text-xs text-gray-400 mt-1">High Quality</p>
               </div>
             </button>
@@ -269,8 +269,8 @@ const App: React.FC = () => {
                 <ImageIcon className={`w-6 h-6 ${activeTab === 'image' ? 'text-green-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">Image to Video</h3>
-                <p className="text-xs text-gray-400 mt-1">Vider.ai API</p>
+                <h3 className="font-semibold text-sm text-white">zxc-pear5</h3>
+                <p className="text-xs text-gray-400 mt-1">Image to Video</p>
               </div>
             </button>
 
@@ -286,8 +286,8 @@ const App: React.FC = () => {
                 <ImageIcon className={`w-6 h-6 ${activeTab === 'imagegen' ? 'text-pink-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">Image Gen</h3>
-                <p className="text-xs text-gray-400 mt-1">Canvas-based</p>
+                <h3 className="font-semibold text-sm text-white">zxc-cloud</h3>
+                <p className="text-xs text-gray-400 mt-1">Image Generator</p>
               </div>
             </button>
 
@@ -303,8 +303,8 @@ const App: React.FC = () => {
                 <Video className={`w-6 h-6 ${activeTab === 'hfspace' ? 'text-indigo-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">HF Space</h3>
-                <p className="text-xs text-gray-400 mt-1">Embedded Gradio</p>
+                <h3 className="font-semibold text-sm text-white">zxc-vox</h3>
+                <p className="text-xs text-gray-400 mt-1">Embedded Space</p>
               </div>
             </button>
 
@@ -320,7 +320,7 @@ const App: React.FC = () => {
                 <Brain className={`w-6 h-6 ${activeTab === 'suggestions' ? 'text-cyan-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">Ideas</h3>
+                <h3 className="font-semibold text-sm text-white">zxc-sun</h3>
                 <p className="text-xs text-gray-400 mt-1">AI Suggestions</p>
               </div>
             </button>
@@ -337,7 +337,7 @@ const App: React.FC = () => {
                 <Camera className={`w-6 h-6 ${activeTab === 'transition' ? 'text-orange-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">Transition</h3>
+                <h3 className="font-semibold text-sm text-white">zxc-flash</h3>
                 <p className="text-xs text-gray-400 mt-1">TikTok Style</p>
               </div>
             </button>
@@ -354,7 +354,7 @@ const App: React.FC = () => {
                 <Video className={`w-6 h-6 ${activeTab === 'wan-transition' ? 'text-violet-400' : 'text-gray-400 group-hover:text-white'}`} />
               </div>
               <div className="text-center">
-                <h3 className="font-semibold text-sm text-white">WAN Transition</h3>
+                <h3 className="font-semibold text-sm text-white">zxc-wave</h3>
                 <p className="text-xs text-gray-400 mt-1">Frame-to-Frame</p>
               </div>
             </button>
@@ -485,8 +485,8 @@ const App: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-8">
                 <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-6">
                   <Brain className="w-8 h-8 text-blue-400 mb-3 mx-auto" />
-                  <h4 className="font-semibold text-white mb-2">13 AI Models</h4>
-                  <p className="text-sm text-gray-400">Hugging Face, Replicate, Pexels, and more</p>
+                  <h4 className="font-semibold text-white mb-2">13 ZXC Models</h4>
+                  <p className="text-sm text-gray-400">zxc-1, zxc-pear, zxc-star, zxc-turtle, and more</p>
                 </div>
                 <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-6">
                   <Zap className="w-8 h-8 text-green-400 mb-3 mx-auto" />
@@ -511,6 +511,40 @@ const App: React.FC = () => {
                 <div className="flex items-center space-x-2">
                   <Clock className="w-4 h-4 text-purple-400" />
                   <span className="text-gray-300">20-Second Videos</span>
+                </div>
+              </div>
+              
+              {/* Provider Information - Hidden at bottom */}
+              <div className="mt-20 pt-8 border-t border-gray-800/30">
+                <p className="text-xs text-gray-500 mb-4">Powered by:</p>
+                <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-gray-600">
+                  <span>zxc-star (Sora-2 via InoculateMedia)</span>
+                  <span>•</span>
+                  <span>zxc-pear (ZeroScope v2 via Hysts)</span>
+                  <span>•</span>
+                  <span>zxc-turtle (CogVideoX 2B via Zai-Org)</span>
+                  <span>•</span>
+                  <span>zxc-bolt (Hugging Face)</span>
+                  <span>•</span>
+                  <span>zxc-zen (Replicate)</span>
+                  <span>•</span>
+                  <span>zxc-flash (Pexels)</span>
+                  <span>•</span>
+                  <span>zxc-star (ChatGLM)</span>
+                  <span>•</span>
+                  <span>zxc-bolt (Mistral Small via LLM7)</span>
+                  <span>•</span>
+                  <span>zxc-nova (Mistral Large via LLM7)</span>
+                  <span>•</span>
+                  <span>zxc-zen (GPT-4 via LLM7)</span>
+                  <span>•</span>
+                  <span>zxc-ace (Claude via LLM7)</span>
+                  <span>•</span>
+                  <span>zxc-flash (Gemini via LLM7)</span>
+                  <span>•</span>
+                  <span>zxc-moon (Gemini Video via Google)</span>
+                  <span>•</span>
+                  <span>zxc-nex (Multi-Provider System)</span>
                 </div>
               </div>
             </div>

@@ -5,11 +5,11 @@ module.exports = function handler(req, res) {
 
   res.status(200).json({
     baseModels: [
-      'Realistic',
-      'Cartoon',
-      'Anime',
-      '3D',
-      'Sketch'
+      'zxc-1',
+      'zxc-pear',
+      'zxc-pear5',
+      'zxc-turtle',
+      'zxc-wave'
     ],
     motionOptions: [
       '',

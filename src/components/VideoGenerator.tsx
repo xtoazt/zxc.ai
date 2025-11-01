@@ -24,7 +24,7 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
   initialPrompt = ''
 }) => {
   const [prompt, setPrompt] = useState(initialPrompt);
-  const [baseModel, setBaseModel] = useState('Realistic');
+  const [baseModel, setBaseModel] = useState('zxc-1');
   const [motion, setMotion] = useState('');
   const [inferenceSteps, setInferenceSteps] = useState('4-Step');
   const [videoLength, setVideoLength] = useState(2);
@@ -111,7 +111,7 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
   return (
     <div className="space-y-10">
       <div className="text-center">
-        <h2 className="text-3xl font-semibold text-white mb-3">Text to Video</h2>
+        <h2 className="text-3xl font-semibold text-white mb-3">zxc-1 Video Generator</h2>
         <p className="text-gray-400 text-lg">Create videos from text descriptions</p>
       </div>
 

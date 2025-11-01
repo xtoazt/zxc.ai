@@ -12,49 +12,49 @@ const LLMOptions: React.FC<LLMOptionsProps> = ({ onLLMSelect, selectedLLM }) => 
   const llmOptions = [
     {
       id: 'chatglm',
-      name: 'ChatGLM (Default)',
-      description: 'Fast, reliable Chinese LLM with streaming',
-      provider: 'ChatGLM',
+      name: 'zxc-star (Default)',
+      description: 'Fast, reliable AI model with streaming',
+      provider: 'ZXC',
       icon: <Brain className="w-5 h-5" />,
       color: 'text-blue-400'
     },
     {
       id: 'llm7-mistral-small',
-      name: 'Mistral Small',
-      description: 'Efficient and fast model via LLM7',
-      provider: 'LLM7',
+      name: 'zxc-bolt',
+      description: 'Efficient and fast model',
+      provider: 'ZXC',
       icon: <Zap className="w-5 h-5" />,
       color: 'text-purple-400'
     },
     {
       id: 'llm7-mistral-large',
-      name: 'Mistral Large',
+      name: 'zxc-nova',
       description: 'Advanced reasoning and coding',
-      provider: 'LLM7',
+      provider: 'ZXC',
       icon: <Brain className="w-5 h-5" />,
       color: 'text-purple-400'
     },
     {
       id: 'llm7-gpt-4',
-      name: 'GPT-4',
-      description: 'OpenAI GPT-4 via LLM7',
-      provider: 'LLM7',
+      name: 'zxc-zen',
+      description: 'Advanced language model',
+      provider: 'ZXC',
       icon: <MessageCircle className="w-5 h-5" />,
       color: 'text-green-400'
     },
     {
       id: 'llm7-claude',
-      name: 'Claude',
-      description: 'Anthropic Claude via LLM7',
-      provider: 'LLM7',
+      name: 'zxc-ace',
+      description: 'High-performance AI model',
+      provider: 'ZXC',
       icon: <Brain className="w-5 h-5" />,
       color: 'text-orange-400'
     },
     {
       id: 'llm7-gemini',
-      name: 'Gemini',
-      description: 'Google Gemini via LLM7',
-      provider: 'LLM7',
+      name: 'zxc-flash',
+      description: 'Multimodal AI model',
+      provider: 'ZXC',
       icon: <Zap className="w-5 h-5" />,
       color: 'text-yellow-400'
     }

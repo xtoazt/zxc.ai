@@ -26,11 +26,11 @@ const GeminiVideoGenerator: React.FC<GeminiVideoGeneratorProps> = ({
 
     onGenerationStart();
     setProgress(0);
-    setStatusMessage('Enhancing prompt with Gemini AI...');
+    setStatusMessage('Enhancing prompt with zxc-moon...');
 
     try {
       setProgress(25);
-      setStatusMessage('Analyzing your prompt with Gemini...');
+      setStatusMessage('Analyzing your prompt with zxc-moon...');
 
       const response = await fetch('/api/generate-video-gemini', {
         method: 'POST',
@@ -136,14 +136,14 @@ const GeminiVideoGenerator: React.FC<GeminiVideoGeneratorProps> = ({
       <div className="text-center mb-8">
         <div className="flex items-center justify-center mb-4">
           <Wand2 className="w-8 h-8 text-purple-400 mr-3" />
-          <h2 className="text-3xl font-bold text-white">Gemini AI Video Generator</h2>
+          <h2 className="text-3xl font-bold text-white">zxc-moon Video Generator</h2>
         </div>
         <p className="text-blue-100">
-          Powered by Google Gemini AI - Enhanced prompt generation for better video results
+          Enhanced prompt generation for better video results
         </p>
         <div className="mt-4 inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-full px-4 py-2">
           <Brain className="w-5 h-5 text-purple-400" />
-          <span className="text-purple-300 text-sm font-medium">Gemini Pro Enhanced</span>
+          <span className="text-purple-300 text-sm font-medium">Enhanced Model</span>
         </div>
       </div>
 
@@ -162,7 +162,7 @@ const GeminiVideoGenerator: React.FC<GeminiVideoGeneratorProps> = ({
             disabled={isGenerating}
           />
           <p className="text-gray-400 text-xs mt-2">
-            💡 Gemini AI will enhance your prompt for better video generation results
+            💡 zxc-moon will enhance your prompt for better video generation results
           </p>
         </div>
 
@@ -172,7 +172,7 @@ const GeminiVideoGenerator: React.FC<GeminiVideoGeneratorProps> = ({
             <div className="flex items-start space-x-3">
               <Wand2 className="w-5 h-5 text-purple-400 mt-0.5" />
               <div className="flex-1">
-                <h4 className="text-white font-semibold mb-2">Gemini Enhanced Prompt:</h4>
+                <h4 className="text-white font-semibold mb-2">zxc-moon Enhanced Prompt:</h4>
                 <p className="text-gray-200 text-sm">{enhancedPrompt}</p>
               </div>
             </div>
@@ -266,7 +266,7 @@ const GeminiVideoGenerator: React.FC<GeminiVideoGeneratorProps> = ({
             ) : (
               <>
                 <Sparkles className="w-5 h-5 mr-3" />
-                Generate with Gemini AI
+                Generate with zxc-moon
               </>
             )}
           </button>
@@ -277,16 +277,16 @@ const GeminiVideoGenerator: React.FC<GeminiVideoGeneratorProps> = ({
       <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl p-6">
         <h3 className="text-white font-semibold mb-3 flex items-center">
           <Brain className="w-5 h-5 text-purple-400 mr-2" />
-          How Gemini AI Enhancement Works
+          How zxc-moon Enhancement Works
         </h3>
         <ul className="space-y-2 text-gray-300 text-sm">
           <li className="flex items-start">
             <span className="text-purple-400 mr-2">1.</span>
-            <span>Gemini AI analyzes your prompt and enhances it with detailed scene descriptions</span>
+            <span>zxc-moon analyzes your prompt and enhances it with detailed scene descriptions</span>
           </li>
           <li className="flex items-start">
             <span className="text-purple-400 mr-2">2.</span>
-            <span>The enhanced prompt is then used with Hugging Face or Replicate for video generation</span>
+            <span>The enhanced prompt is then used with zxc-bolt or zxc-zen for video generation</span>
           </li>
           <li className="flex items-start">
             <span className="text-purple-400 mr-2">3.</span>

@@ -21,10 +21,10 @@ const CogVideoXVideo: React.FC = () => {
       <div className="text-center mb-8">
         <div className="flex items-center justify-center mb-4">
           <Video className="w-8 h-8 text-white mr-3" />
-          <h2 className="text-3xl font-bold text-white">CogVideoX 2B</h2>
+          <h2 className="text-3xl font-bold text-white">zxc-turtle</h2>
         </div>
         <p className="text-blue-100">
-          High-quality video generation with CogVideoX 2B model
+          High-quality video generation with zxc-turtle model
         </p>
         <div className="flex items-center justify-center mt-4">
           <Brain className="w-5 h-5 text-purple-400 mr-2" />
@@ -33,9 +33,6 @@ const CogVideoXVideo: React.FC = () => {
       </div>
 
       <div className="bg-gray-900 rounded-xl border border-gray-800 p-4">
-        <div className="text-sm text-gray-300 mb-3">
-          Powered by: Zai-Org CogVideoX 2B
-        </div>
         <div ref={containerRef} />
       </div>
     </div>

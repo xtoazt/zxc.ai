@@ -97,13 +97,23 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
         }),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: `HTTP ${response.status}` }));
+        throw new Error(errorData.error || `Server error: ${response.status}`);
+      }
+      
       const result = await response.json();
+      
+      if (!result.success && result.error) {
+        throw new Error(result.error);
+      }
+      
       onVideoGenerated(result);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error generating video:', error);
       onVideoGenerated({
         success: false,
-        error: 'Failed to generate video. Please try again.',
+        error: error.message || 'Failed to generate video. Please check your connection and try again.',
       });
     }
   };
@@ -144,7 +154,7 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               placeholder="Focus: Eiffel Tower (Animate: Clouds moving) (Shot from distance)"
-              className="w-full p-5 bg-gray-800/50 border border-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none rounded-xl relative z-10"
+              className="w-full p-5 bg-gray-800/70 border border-gray-700/50 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none rounded-xl relative z-10 transition-all backdrop-blur-sm"
               rows={5}
               disabled={isGenerating}
             />
@@ -215,11 +225,11 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
 
           {/* Motion */}
           <div>
-            <label className="text-sm font-medium text-gray-300 mb-2 block">Motion</label>
+            <label className="text-sm font-semibold text-gray-300 mb-3 block">Motion</label>
             <select
               value={motion}
               onChange={(e) => setMotion(e.target.value)}
-              className="w-full p-3 bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
+              className="w-full p-3.5 bg-gray-800/80 border border-gray-700/50 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl transition-all backdrop-blur-sm"
               disabled={isGenerating}
             >
               {options.motionOptions.map((option) => (
@@ -232,11 +242,11 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
 
           {/* Inference Steps */}
           <div>
-            <label className="text-sm font-medium text-gray-300 mb-2 block">Steps</label>
+            <label className="text-sm font-semibold text-gray-300 mb-3 block">Steps</label>
             <select
               value={inferenceSteps}
               onChange={(e) => setInferenceSteps(e.target.value)}
-              className="w-full p-3 bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-white rounded-lg"
+              className="w-full p-3.5 bg-gray-800/80 border border-gray-700/50 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 rounded-xl transition-all backdrop-blur-sm"
               disabled={isGenerating}
             >
               {options.inferenceSteps.map((step) => (

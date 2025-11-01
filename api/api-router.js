@@ -19,15 +19,30 @@ module.exports = async function handler(req, res) {
     return;
   }
 
+  // Better routing detection for Vercel serverless functions
+  // Check multiple sources for the original path
   const path = req.url || req.path || '';
-
+  const originalUrl = req.headers['x-vercel-original-url'] || req.headers['x-vercel-rewrite-url'] || path;
+  const referer = req.headers.referer || '';
+  const routeHint = req.query.route || req.query.path;
+  
+  // For rewrites, Vercel sets x-vercel-original-url with the original path
+  const fullPath = originalUrl || path;
+  
   // Handle /api/health
-  if (path.includes('/health') || path === '/api/health') {
+  if (fullPath.includes('/health') || routeHint === 'health' || (req.method === 'GET' && fullPath === '/api/health')) {
     return res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
   }
 
-  // Handle /api/options
-  if ((path.includes('/options') || path === '/api/options') && req.method === 'GET') {
+  // Handle /api/options - default GET request
+  // Options is the most common, so make it the default for GET requests without body
+  if (req.method === 'GET') {
+    const isOptionsRequest = fullPath.includes('/options') || routeHint === 'options' || 
+                             (fullPath === '/api/options' || fullPath === '/api/api-router');
+    
+    // If it's clearly not health and is GET, assume options
+    if (isOptionsRequest || (!fullPath.includes('/health') && !fullPath.includes('/enhance') && 
+        !fullPath.includes('/ai-suggestions') && !fullPath.includes('/ai-chat') && !fullPath.includes('/chatglm'))) {
     return res.status(200).json({
       baseModels: [
         'zxc-1',
@@ -57,23 +72,27 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  // Handle /api/enhance-prompt
-  if (path.includes('/enhance-prompt') || path === '/api/enhance-prompt') {
+  // Handle /api/enhance-prompt - POST with prompt in body
+  if (fullPath.includes('/enhance-prompt') || routeHint === 'enhance-prompt' || 
+      (req.method === 'POST' && req.body && req.body.prompt && !req.body.message && !req.body.category)) {
     return handleEnhancePrompt(req, res);
   }
 
-  // Handle /api/ai-suggestions
-  if (path.includes('/ai-suggestions') || path === '/api/ai-suggestions') {
+  // Handle /api/ai-suggestions - POST with category/mood
+  if (fullPath.includes('/ai-suggestions') || routeHint === 'ai-suggestions' || 
+      (req.method === 'POST' && req.body && (req.body.category || req.body.mood))) {
     return handleAISuggestions(req, res);
   }
 
-  // Handle /api/ai-chat
-  if (path.includes('/ai-chat') || path === '/api/ai-chat') {
+  // Handle /api/ai-chat - POST with message
+  if (fullPath.includes('/ai-chat') || routeHint === 'ai-chat' || 
+      (req.method === 'POST' && req.body && req.body.message && req.body.context)) {
     return handleAIChat(req, res);
   }
 
-  // Handle /api/chatglm-chat
-  if (path.includes('/chatglm-chat') || path === '/api/chatglm-chat') {
+  // Handle /api/chatglm-chat - POST with message and model
+  if (fullPath.includes('/chatglm-chat') || routeHint === 'chatglm-chat' || 
+      (req.method === 'POST' && req.body && req.body.message && req.body.model)) {
     return handleChatGLMChat(req, res);
   }
 
@@ -86,7 +105,13 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  return res.status(404).json({ error: 'Not found' });
+  // If POST but no handler matched, return helpful error
+  return res.status(404).json({ 
+    error: 'Endpoint not found',
+    available: ['/api/health', '/api/options', '/api/enhance-prompt', '/api/ai-suggestions', '/api/ai-chat', '/api/chatglm-chat'],
+    path: fullPath,
+    method: req.method
+  });
 };
 
 // Enhance prompt handler

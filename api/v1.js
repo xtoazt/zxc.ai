@@ -12,16 +12,18 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  // Route based on the path
+  // Route based on the path and query
   const path = req.url || req.path || '';
+  const originalUrl = req.headers['x-vercel-original-url'] || req.headers['x-vercel-rewrite-url'] || path;
+  const routeHint = req.query.route || req.query.path;
   
   // Handle /v1/models endpoint
-  if (path.includes('/models') || path === '/v1/models' || (req.method === 'GET' && !req.body)) {
+  if (routeHint === 'models' || originalUrl.includes('/models') || path.includes('/models') || (req.method === 'GET' && !req.body && routeHint !== 'chat-completions')) {
     return handleModels(req, res);
   }
   
   // Handle /v1/chat/completions endpoint
-  if (path.includes('/chat/completions') || path === '/v1/chat/completions' || req.method === 'POST') {
+  if (routeHint === 'chat-completions' || originalUrl.includes('/chat/completions') || path.includes('/chat/completions') || (req.method === 'POST' && routeHint !== 'models')) {
     return handleChatCompletions(req, res);
   }
 

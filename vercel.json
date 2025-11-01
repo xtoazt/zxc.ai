@@ -38,6 +38,22 @@
     },
     "api/generate-video-gemini.js": {
       "maxDuration": 60
+    },
+    "api/v1/chat/completions.js": {
+      "maxDuration": 300
+    },
+    "api/v1/models.js": {
+      "maxDuration": 10
     }
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/v1/chat/completions",
+      "destination": "/api/v1/chat/completions"
+    },
+    {
+      "source": "/v1/models",
+      "destination": "/api/v1/models"
+    }
+  ]
 }

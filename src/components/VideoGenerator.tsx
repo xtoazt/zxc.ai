@@ -111,8 +111,8 @@ const VideoGenerator: React.FC<VideoGeneratorProps> = ({
   return (
     <div className="space-y-10">
       <div className="text-center">
-        <h2 className="text-3xl font-semibold text-white mb-3">zxc-1 Video Generator</h2>
-        <p className="text-gray-400 text-lg">Create videos from text descriptions</p>
+        <h2 className="text-4xl font-bold text-white mb-4 tracking-tight">zxc-1 Video Generator</h2>
+        <p className="text-gray-400 text-lg font-light">Create videos from text descriptions with professional quality</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8">

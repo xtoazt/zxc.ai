@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2, Camera, MessageCircle, Zap, Infinity, Clock, CheckCircle, Rocket } from 'lucide-react';
+import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2, Camera, MessageCircle, Zap, Infinity, Clock, CheckCircle, Rocket, Code } from 'lucide-react';
 import VideoGenerator from './components/VideoGenerator';
 import ImageUpload from './components/ImageUpload';
 import VideoDisplay from './components/VideoDisplay';
@@ -15,6 +15,7 @@ import AdvancedVideoGenerator from './components/AdvancedVideoGenerator';
 import GeminiVideoGenerator from './components/GeminiVideoGenerator';
 import LLMOptions from './components/LLMOptions';
 import AIChatWidget from './components/AIChatWidget';
+import DeveloperSection from './components/DeveloperSection';
 import { MagicCard } from './components/ui/magic-card';
 import { BorderBeam } from './components/ui/border-beam';
 import { AnimatedGradientText } from './components/ui/animated-gradient-text';
@@ -91,34 +92,34 @@ const App: React.FC = () => {
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 via-purple-600/10 to-pink-600/10"></div>
         <div className="relative border-b border-gray-800/50 backdrop-blur-sm">
-          <div className="max-w-8xl mx-auto px-8 py-12">
+          <div className="max-w-8xl mx-auto px-8 py-16">
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-8">
                 <div className="relative">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                    <Video className="w-8 h-8 text-white" />
+                  <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-xl">
+                    <Video className="w-10 h-10 text-white" />
                   </div>
-                  <div className="absolute -top-1 -right-1 w-5 h-5 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="absolute -top-1 -right-1 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-gray-900"></div>
                 </div>
                 <div>
-                  <AnimatedGradientText className="text-4xl font-bold">
+                  <AnimatedGradientText className="text-5xl font-extrabold tracking-tight">
                     zxc.ai
                   </AnimatedGradientText>
-                  <p className="text-sm text-gray-400 mt-2">AI-Powered Video Generation Platform</p>
+                  <p className="text-base text-gray-300 mt-3 font-medium tracking-wide">The Media Generations of the Future.</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-6">
-                <div className="flex items-center space-x-2 bg-green-500/20 border border-green-500/50 rounded-full px-5 py-2.5">
+              <div className="flex items-center space-x-8">
+                <div className="flex items-center space-x-3 bg-green-500/20 border border-green-500/50 rounded-full px-6 py-3 backdrop-blur-sm">
                   <CheckCircle className="w-5 h-5 text-green-400" />
-                  <span className="text-green-300 font-medium">Free</span>
+                  <span className="text-green-300 font-semibold text-sm">Free</span>
                 </div>
-                <div className="flex items-center space-x-2 bg-blue-500/20 border border-blue-500/50 rounded-full px-5 py-2.5">
+                <div className="flex items-center space-x-3 bg-blue-500/20 border border-blue-500/50 rounded-full px-6 py-3 backdrop-blur-sm">
                   <Infinity className="w-5 h-5 text-blue-400" />
-                  <span className="text-blue-300 font-medium">Unlimited</span>
+                  <span className="text-blue-300 font-semibold text-sm">Unlimited</span>
                 </div>
-                <div className="flex items-center space-x-2 bg-purple-500/20 border border-purple-500/50 rounded-full px-5 py-2.5">
+                <div className="flex items-center space-x-3 bg-purple-500/20 border border-purple-500/50 rounded-full px-6 py-3 backdrop-blur-sm">
                   <Clock className="w-5 h-5 text-purple-400" />
-                  <span className="text-purple-300 font-medium">20s Videos</span>
+                  <span className="text-purple-300 font-semibold text-sm">20s Videos</span>
                 </div>
               </div>
             </div>
@@ -132,10 +133,10 @@ const App: React.FC = () => {
         {/* Enhanced Tab Navigation */}
         <div className="mb-24">
           <div className="text-center mb-12">
-            <AnimatedGradientText className="text-4xl md:text-5xl font-bold mb-4">
+            <AnimatedGradientText className="text-5xl md:text-6xl font-extrabold mb-6 tracking-tight">
               Choose Your Generation Method
             </AnimatedGradientText>
-            <p className="text-gray-400 text-lg">Select from our comprehensive suite of AI models</p>
+            <p className="text-gray-400 text-xl font-light">Select from our comprehensive suite of 15+ AI models</p>
             <div className="mt-6 flex items-center justify-center space-x-6">
               <div className="h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent w-40"></div>
               <Sparkles className="w-6 h-6 text-purple-400" />
@@ -143,7 +144,7 @@ const App: React.FC = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6 max-w-7xl mx-auto">
             <MagicCard
               className={`relative rounded-2xl overflow-hidden ${
                 activeTab === 'advanced' ? 'ring-2 ring-yellow-500/50' : ''
@@ -358,28 +359,49 @@ const App: React.FC = () => {
                 <p className="text-xs text-gray-400 mt-1">Frame-to-Frame</p>
               </div>
             </button>
+
+            <button
+              onClick={() => setActiveTab('developer')}
+              className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center space-y-3 ${
+                activeTab === 'developer'
+                  ? 'bg-gradient-to-br from-blue-500/20 via-cyan-500/20 to-teal-500/20 border-blue-500/50 shadow-lg shadow-blue-500/25 ring-2 ring-blue-500/30'
+                  : 'bg-gray-800/50 border-gray-700 hover:border-blue-500/50 hover:bg-gray-800/70'
+              }`}
+            >
+              <div className={`p-3 rounded-xl ${activeTab === 'developer' ? 'bg-blue-500/20' : 'bg-gray-700/50 group-hover:bg-blue-500/10'}`}>
+                <Code className={`w-6 h-6 ${activeTab === 'developer' ? 'text-blue-400' : 'text-gray-400 group-hover:text-blue-400'}`} />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold text-sm text-white">Developer</h3>
+                <p className="text-xs text-gray-400 mt-1">API & Docs</p>
+                <span className="inline-block mt-1 px-2 py-0.5 text-xs bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full border border-blue-500/30">NEW</span>
+              </div>
+            </button>
           </div>
         </div>
 
-        {/* Enhanced LLM Selection */}
-        <div className="mb-16">
-          <div className="text-center mb-8">
-            <h3 className="text-xl font-semibold text-white mb-3">Choose Your AI Assistant</h3>
-            <p className="text-gray-400">Select the AI model for text generation and suggestions</p>
+        {/* Enhanced LLM Selection - Only show for non-developer tabs */}
+        {activeTab !== 'developer' && (
+          <div className="mb-16">
+            <div className="text-center mb-8">
+              <h3 className="text-xl font-semibold text-white mb-3">Choose Your AI Assistant</h3>
+              <p className="text-gray-400 font-light">Select the AI model for text generation and suggestions</p>
+            </div>
+            <div className="flex justify-center">
+              <LLMOptions 
+                onLLMSelect={setSelectedLLM}
+                selectedLLM={selectedLLM}
+              />
+            </div>
           </div>
-          <div className="flex justify-center">
-            <LLMOptions 
-              onLLMSelect={setSelectedLLM}
-              selectedLLM={selectedLLM}
-            />
-          </div>
-        </div>
+        )}
 
         {/* Enhanced Main Content */}
         <div className="max-w-6xl mx-auto">
-          <MagicCard className="relative rounded-3xl overflow-hidden" gradientFrom="#3B82F6" gradientTo="#8B5CF6">
-            <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl border border-gray-700/50 p-16 shadow-2xl relative">
-              <BorderBeam size={250} duration={12} />
+          {activeTab !== 'developer' ? (
+            <MagicCard className="relative rounded-3xl overflow-hidden" gradientFrom="#3B82F6" gradientTo="#8B5CF6">
+              <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl border border-gray-700/50 p-16 shadow-2xl relative">
+                <BorderBeam size={250} duration={12} />
             {activeTab === 'text' ? (
               <VideoGenerator
                 onVideoGenerated={handleVideoGenerated}
@@ -425,7 +447,7 @@ const App: React.FC = () => {
                 onGenerationStart={handleGenerationStart}
                 isGenerating={isGenerating}
               />
-            ) : (
+            ) : activeTab === 'developer' ? null : (
               <TransitionVideo
                 onVideoGenerated={handleVideoGenerated}
                 onGenerationStart={handleGenerationStart}
@@ -464,6 +486,9 @@ const App: React.FC = () => {
             )}
             </div>
           </MagicCard>
+          ) : (
+            <DeveloperSection />
+          )}
         </div>
 
         {/* Enhanced Footer */}
@@ -479,24 +504,24 @@ const App: React.FC = () => {
                 </span>
               </div>
               <p className="text-gray-400 mb-6 max-w-2xl mx-auto text-lg">
-                The ultimate AI-powered video generation platform. Create stunning videos with multiple cutting-edge models, 
+                The Media Generations of the Future. Create stunning videos with multiple cutting-edge models, 
                 all in one place. Free, unlimited, and always evolving.
               </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-8">
-                <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-6">
-                  <Brain className="w-8 h-8 text-blue-400 mb-3 mx-auto" />
-                  <h4 className="font-semibold text-white mb-2">13 ZXC Models</h4>
-                  <p className="text-sm text-gray-400">zxc-1, zxc-pear, zxc-star, zxc-turtle, and more</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-12">
+                <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-2xl p-8 backdrop-blur-sm">
+                  <Brain className="w-10 h-10 text-blue-400 mb-4 mx-auto" />
+                  <h4 className="font-bold text-white mb-3 text-lg">15 ZXC Models</h4>
+                  <p className="text-sm text-gray-400 leading-relaxed">zxc-1, zxc-pear, zxc-star, zxc-turtle, zxc-nex, zxc-bolt, zxc-zen, zxc-flash, zxc-moon, zxc-cloud, zxc-vox, zxc-sun, zxc-flash-transition, zxc-wave, and more</p>
                 </div>
-                <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-6">
-                  <Zap className="w-8 h-8 text-green-400 mb-3 mx-auto" />
-                  <h4 className="font-semibold text-white mb-2">Lightning Fast</h4>
-                  <p className="text-sm text-gray-400">Generate videos in seconds, not minutes</p>
+                <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-2xl p-8 backdrop-blur-sm">
+                  <Zap className="w-10 h-10 text-green-400 mb-4 mx-auto" />
+                  <h4 className="font-bold text-white mb-3 text-lg">Lightning Fast</h4>
+                  <p className="text-sm text-gray-400 leading-relaxed">Generate videos in seconds, not minutes. Optimized for speed and efficiency.</p>
                 </div>
-                <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl p-6">
-                  <Video className="w-8 h-8 text-purple-400 mb-3 mx-auto" />
-                  <h4 className="font-semibold text-white mb-2">4K Quality</h4>
-                  <p className="text-sm text-gray-400">Up to 4K resolution support</p>
+                <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-2xl p-8 backdrop-blur-sm">
+                  <Video className="w-10 h-10 text-purple-400 mb-4 mx-auto" />
+                  <h4 className="font-bold text-white mb-3 text-lg">4K Quality</h4>
+                  <p className="text-sm text-gray-400 leading-relaxed">Up to 4K resolution support with professional-grade output quality.</p>
                 </div>
               </div>
               <div className="flex items-center justify-center space-x-8 text-sm">

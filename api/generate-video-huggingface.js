@@ -10,8 +10,16 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, message: 'Prompt is required.' });
   }
 
-  const HF_TOKEN = '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';
+  const HF_TOKEN = process.env.HUGGING_FACE_TOKEN || '';
   const MODEL_ID = 'damo-vilab/text-to-video-ms-1.7b';
+
+  if (!HF_TOKEN) {
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Hugging Face API token not configured. Please set HUGGING_FACE_TOKEN environment variable.',
+      provider: 'huggingface'
+    });
+  }
 
   const getResolutionDimensions = (res) => {
     const resolutions = {

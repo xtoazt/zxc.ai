@@ -10,7 +10,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, message: 'Prompt is required.' });
   }
 
-  const PEXELS_API_KEY = 'Ird8rfJTw92IdWaBmGrSqqm8yBd87iGOzHqmEZLdFNWAdhQjbBVCxiQX';
+  const PEXELS_API_KEY = process.env.PEXELS_API_KEY || '';
+
+  if (!PEXELS_API_KEY) {
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Pexels API key not configured. Please set PEXELS_API_KEY environment variable.',
+      provider: 'pexels'
+    });
+  }
 
   const extractKeyTerms = (promptText) => {
     const commonWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'can', 'shall'];

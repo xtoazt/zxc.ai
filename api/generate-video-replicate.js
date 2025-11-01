@@ -10,8 +10,16 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, message: 'Prompt is required.' });
   }
 
-  const REPLICATE_TOKEN = 'r8_ZMEFhUTRf6aISbsZlYV6On6z9h43d681S0wwu';
+  const REPLICATE_TOKEN = process.env.REPLICATE_TOKEN || '';
   const MODEL_VERSION = '9f747673945c62801b13b84701c783929c0ee784e4748ec062204894dda1a351';
+
+  if (!REPLICATE_TOKEN) {
+    return res.status(500).json({ 
+      success: false, 
+      error: 'Replicate API token not configured. Please set REPLICATE_TOKEN environment variable.',
+      provider: 'replicate'
+    });
+  }
 
   const getResolutionDimensions = (res) => {
     const resolutions = {
@@ -70,7 +78,7 @@ export default async function handler(req, res) {
 
       const statusResponse = await fetch(`https://api.replicate.com/v1/predictions/${prediction.id}`, {
         headers: {
-          'Authorization': `Token ${REPLICATE_TOKEN}`,
+          'Authorization': `Token ${process.env.REPLICATE_TOKEN || ''}`,
         }
       });
 

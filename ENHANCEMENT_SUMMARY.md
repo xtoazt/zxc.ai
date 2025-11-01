@@ -55,10 +55,13 @@ Added a new **"Advanced AI"** tab with three powerful video generation providers
 
 ## 🔧 Technical Details
 
-### API Keys (from veo.js):
-- **Hugging Face**: `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`
-- **Replicate**: `r8_ZMEFhUTRf6aISbsZlYV6On6z9h43d681S0wwu`
-- **Pexels**: `Ird8rfJTw92IdWaBmGrSqqm8yBd87iGOzHqmEZLdFNWAdhQjbBVCxiQX`
+### Environment Variables Required:
+Set these in your Vercel dashboard or `.env` file:
+- `HUGGING_FACE_TOKEN` - Your Hugging Face API token
+- `REPLICATE_TOKEN` - Your Replicate API token  
+- `PEXELS_API_KEY` - Your Pexels API key
+
+See `.env.example` for the template.
 
 ### Features:
 - **Multi-Provider Support** - Choose between 3 different providers

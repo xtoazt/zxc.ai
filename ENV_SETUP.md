@@ -19,6 +19,12 @@ To use the Advanced Video Generator features, you need to set up the following e
 - **Sign up** for a free account
 - **Set in Vercel**: Go to your project settings → Environment Variables → Add `PEXELS_API_KEY`
 
+### 4. Gemini API Key (NEW)
+- **Get your API key**: Visit https://makersuite.google.com/app/apikey
+- **Sign up** for Google AI Studio
+- **Set in Vercel**: Go to your project settings → Environment Variables → Add `GEMINI_API_KEY`
+- **Note**: Gemini enhances prompts for better video generation results
+
 ## Local Development Setup
 
 1. Copy `.env.example` to `.env`:
@@ -31,6 +37,7 @@ To use the Advanced Video Generator features, you need to set up the following e
    HUGGING_FACE_TOKEN=your_token_here
    REPLICATE_TOKEN=your_token_here
    PEXELS_API_KEY=your_api_key_here
+   GEMINI_API_KEY=your_gemini_api_key_here
    ```
 
 3. Restart your development server
@@ -43,6 +50,7 @@ To use the Advanced Video Generator features, you need to set up the following e
    - `HUGGING_FACE_TOKEN`
    - `REPLICATE_TOKEN`
    - `PEXELS_API_KEY`
+   - `GEMINI_API_KEY`
 4. Redeploy your application
 
 ## Security Notes

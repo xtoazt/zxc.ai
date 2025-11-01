@@ -35,6 +35,9 @@
     },
     "api/generate-video-pexels.js": {
       "maxDuration": 60
+    },
+    "api/generate-video-gemini.js": {
+      "maxDuration": 60
     }
   }
 }

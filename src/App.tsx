@@ -12,6 +12,7 @@ import ZeroScopeVideo from './components/ZeroScopeVideo';
 import CogVideoXVideo from './components/CogVideoXVideo';
 import WANTransitionVideo from './components/WANTransitionVideo';
 import AdvancedVideoGenerator from './components/AdvancedVideoGenerator';
+import GeminiVideoGenerator from './components/GeminiVideoGenerator';
 import LLMOptions from './components/LLMOptions';
 import AIChatWidget from './components/AIChatWidget';
 import './App.css';
@@ -29,7 +30,7 @@ interface Options {
 }
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'text' | 'image' | 'suggestions' | 'transition' | 'hfspace' | 'imagegen' | 'sora2' | 'zeroscope' | 'cogvideox' | 'wan-transition' | 'advanced'>('text');
+  const [activeTab, setActiveTab] = useState<'text' | 'image' | 'suggestions' | 'transition' | 'hfspace' | 'imagegen' | 'sora2' | 'zeroscope' | 'cogvideox' | 'wan-transition' | 'advanced' | 'gemini'>('text');
   const [videoResult, setVideoResult] = useState<VideoResult | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState<Options>({
@@ -143,6 +144,24 @@ const App: React.FC = () => {
                 <h3 className="font-semibold text-sm text-white">Advanced AI</h3>
                 <p className="text-xs text-gray-400 mt-1">Multi-Provider</p>
                 <span className="inline-block mt-1 px-2 py-0.5 text-xs bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-full border border-yellow-500/30">NEW</span>
+              </div>
+            </button>
+
+            <button
+              onClick={() => setActiveTab('gemini')}
+              className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center space-y-3 ${
+                activeTab === 'gemini'
+                  ? 'bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-rose-500/20 border-purple-500/50 shadow-lg shadow-purple-500/25 ring-2 ring-purple-500/30'
+                  : 'bg-gray-800/50 border-gray-700 hover:border-purple-500/50 hover:bg-gray-800/70'
+              }`}
+            >
+              <div className={`p-3 rounded-xl ${activeTab === 'gemini' ? 'bg-purple-500/20' : 'bg-gray-700/50 group-hover:bg-purple-500/10'}`}>
+                <Wand2 className={`w-6 h-6 ${activeTab === 'gemini' ? 'text-purple-400' : 'text-gray-400 group-hover:text-purple-400'}`} />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold text-sm text-white">Gemini AI</h3>
+                <p className="text-xs text-gray-400 mt-1">Prompt Enhancement</p>
+                <span className="inline-block mt-1 px-2 py-0.5 text-xs bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full border border-purple-500/30">NEW</span>
               </div>
             </button>
 
@@ -370,6 +389,12 @@ const App: React.FC = () => {
               <WANTransitionVideo />
             ) : activeTab === 'advanced' ? (
               <AdvancedVideoGenerator
+                onVideoGenerated={handleVideoGenerated}
+                onGenerationStart={handleGenerationStart}
+                isGenerating={isGenerating}
+              />
+            ) : activeTab === 'gemini' ? (
+              <GeminiVideoGenerator
                 onVideoGenerated={handleVideoGenerated}
                 onGenerationStart={handleGenerationStart}
                 isGenerating={isGenerating}

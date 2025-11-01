@@ -47,6 +47,24 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
       return [{ segment: 1, url: result.data, prompt: 'Image-to-video generated with Vider.ai' }];
     }
     
+    // Handle Hugging Face results
+    if (result.provider === 'huggingface' && result.data) {
+      console.log('Hugging Face result detected:', result.data);
+      return [{ segment: 1, url: result.data, prompt: 'AI-generated video with Hugging Face' }];
+    }
+    
+    // Handle Replicate results
+    if (result.provider === 'replicate' && result.data) {
+      console.log('Replicate result detected:', result.data);
+      return [{ segment: 1, url: result.data, prompt: 'AI-generated video with Replicate' }];
+    }
+    
+    // Handle Pexels results
+    if (result.provider === 'pexels' && result.data) {
+      console.log('Pexels result detected:', result.data);
+      return [{ segment: 1, url: result.data, prompt: 'Video from Pexels library' }];
+    }
+    
     // Handle Instant Video results (multiple segments or single video)
     if (result.data) {
       console.log('Processing Instant Video result data:', result.data);
@@ -186,6 +204,45 @@ const VideoDisplay: React.FC<VideoDisplayProps> = ({ result }) => {
           <p className="text-blue-100 text-sm mb-4">
             {result.message || 'Your video has been generated successfully!'}
           </p>
+          
+          {/* Provider Info */}
+          {(result.provider || result.model) && (
+            <div className="mb-4 p-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg border border-blue-500/30">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-300">Provider:</span>
+                <span className="text-white font-semibold">
+                  {result.provider === 'huggingface' && '🤗 Hugging Face'}
+                  {result.provider === 'replicate' && '🔄 Replicate'}
+                  {result.provider === 'pexels' && '📹 Pexels'}
+                  {result.provider === 'vider-ai' && '🎬 Vider.ai'}
+                  {!result.provider && result.model}
+                </span>
+              </div>
+              {result.model && result.provider && (
+                <div className="flex items-center justify-between text-sm mt-2">
+                  <span className="text-gray-300">Model:</span>
+                  <span className="text-white font-medium">{result.model}</span>
+                </div>
+              )}
+              {result.resolution && (
+                <div className="flex items-center justify-between text-sm mt-2">
+                  <span className="text-gray-300">Resolution:</span>
+                  <span className="text-white font-medium">{result.resolution}</span>
+                </div>
+              )}
+              {result.duration && (
+                <div className="flex items-center justify-between text-sm mt-2">
+                  <span className="text-gray-300">Duration:</span>
+                  <span className="text-white font-medium">{result.duration}s</span>
+                </div>
+              )}
+              {result.attribution && (
+                <div className="mt-2 pt-2 border-t border-blue-500/20">
+                  <p className="text-xs text-gray-400 italic">{result.attribution}</p>
+                </div>
+              )}
+            </div>
+          )}
           
           {/* Download Buttons */}
           {isMultiSegment ? (

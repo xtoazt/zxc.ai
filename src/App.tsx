@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2, Camera, MessageCircle, Zap, Infinity, Clock, CheckCircle } from 'lucide-react';
+import { Video, Upload, Download, Sparkles, Image as ImageIcon, Loader2, Brain, Wand2, Camera, MessageCircle, Zap, Infinity, Clock, CheckCircle, Rocket } from 'lucide-react';
 import VideoGenerator from './components/VideoGenerator';
 import ImageUpload from './components/ImageUpload';
 import VideoDisplay from './components/VideoDisplay';
@@ -11,6 +11,7 @@ import Sora2Video from './components/Sora2Video';
 import ZeroScopeVideo from './components/ZeroScopeVideo';
 import CogVideoXVideo from './components/CogVideoXVideo';
 import WANTransitionVideo from './components/WANTransitionVideo';
+import AdvancedVideoGenerator from './components/AdvancedVideoGenerator';
 import LLMOptions from './components/LLMOptions';
 import AIChatWidget from './components/AIChatWidget';
 import './App.css';
@@ -28,7 +29,7 @@ interface Options {
 }
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'text' | 'image' | 'suggestions' | 'transition' | 'hfspace' | 'imagegen' | 'sora2' | 'zeroscope' | 'cogvideox' | 'wan-transition'>('text');
+  const [activeTab, setActiveTab] = useState<'text' | 'image' | 'suggestions' | 'transition' | 'hfspace' | 'imagegen' | 'sora2' | 'zeroscope' | 'cogvideox' | 'wan-transition' | 'advanced'>('text');
   const [videoResult, setVideoResult] = useState<VideoResult | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [options, setOptions] = useState<Options>({
@@ -115,11 +116,36 @@ const App: React.FC = () => {
         {/* Enhanced Tab Navigation */}
         <div className="mb-16">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-white mb-2">Choose Your Generation Method</h2>
-            <p className="text-gray-400">Select from our comprehensive suite of AI models</p>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent mb-3">
+              Choose Your Generation Method
+            </h2>
+            <p className="text-gray-400 text-lg">Select from our comprehensive suite of AI models</p>
+            <div className="mt-4 flex items-center justify-center space-x-4">
+              <div className="h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent w-32"></div>
+              <Sparkles className="w-5 h-5 text-purple-400" />
+              <div className="h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent w-32"></div>
+            </div>
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-7xl mx-auto">
+            <button
+              onClick={() => setActiveTab('advanced')}
+              className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center space-y-3 ${
+                activeTab === 'advanced'
+                  ? 'bg-gradient-to-br from-yellow-500/20 via-orange-500/20 to-red-500/20 border-yellow-500/50 shadow-lg shadow-yellow-500/25 ring-2 ring-yellow-500/30'
+                  : 'bg-gray-800/50 border-gray-700 hover:border-yellow-500/50 hover:bg-gray-800/70'
+              }`}
+            >
+              <div className={`p-3 rounded-xl ${activeTab === 'advanced' ? 'bg-yellow-500/20' : 'bg-gray-700/50 group-hover:bg-yellow-500/10'}`}>
+                <Rocket className={`w-6 h-6 ${activeTab === 'advanced' ? 'text-yellow-400' : 'text-gray-400 group-hover:text-yellow-400'}`} />
+              </div>
+              <div className="text-center">
+                <h3 className="font-semibold text-sm text-white">Advanced AI</h3>
+                <p className="text-xs text-gray-400 mt-1">Multi-Provider</p>
+                <span className="inline-block mt-1 px-2 py-0.5 text-xs bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-full border border-yellow-500/30">NEW</span>
+              </div>
+            </button>
+
             <button
               onClick={() => setActiveTab('text')}
               className={`group relative p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center space-y-3 ${
@@ -342,6 +368,12 @@ const App: React.FC = () => {
               <CogVideoXVideo />
             ) : activeTab === 'wan-transition' ? (
               <WANTransitionVideo />
+            ) : activeTab === 'advanced' ? (
+              <AdvancedVideoGenerator
+                onVideoGenerated={handleVideoGenerated}
+                onGenerationStart={handleGenerationStart}
+                isGenerating={isGenerating}
+              />
             ) : (
               <TransitionVideo
                 onVideoGenerated={handleVideoGenerated}
@@ -391,10 +423,27 @@ const App: React.FC = () => {
                   zxc.ai
                 </span>
               </div>
-              <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
+              <p className="text-gray-400 mb-6 max-w-2xl mx-auto text-lg">
                 The ultimate AI-powered video generation platform. Create stunning videos with multiple cutting-edge models, 
                 all in one place. Free, unlimited, and always evolving.
               </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-8">
+                <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-6">
+                  <Brain className="w-8 h-8 text-blue-400 mb-3 mx-auto" />
+                  <h4 className="font-semibold text-white mb-2">13 AI Models</h4>
+                  <p className="text-sm text-gray-400">Hugging Face, Replicate, Pexels, and more</p>
+                </div>
+                <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-xl p-6">
+                  <Zap className="w-8 h-8 text-green-400 mb-3 mx-auto" />
+                  <h4 className="font-semibold text-white mb-2">Lightning Fast</h4>
+                  <p className="text-sm text-gray-400">Generate videos in seconds, not minutes</p>
+                </div>
+                <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/20 rounded-xl p-6">
+                  <Video className="w-8 h-8 text-purple-400 mb-3 mx-auto" />
+                  <h4 className="font-semibold text-white mb-2">4K Quality</h4>
+                  <p className="text-sm text-gray-400">Up to 4K resolution support</p>
+                </div>
+              </div>
               <div className="flex items-center justify-center space-x-8 text-sm">
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="w-4 h-4 text-green-400" />

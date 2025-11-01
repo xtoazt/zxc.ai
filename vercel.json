@@ -26,6 +26,15 @@
     },
     "api/chatglm-chat.js": {
       "maxDuration": 60
+    },
+    "api/generate-video-huggingface.js": {
+      "maxDuration": 300
+    },
+    "api/generate-video-replicate.js": {
+      "maxDuration": 300
+    },
+    "api/generate-video-pexels.js": {
+      "maxDuration": 60
     }
   }
 }

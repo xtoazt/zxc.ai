@@ -9,23 +9,11 @@
     "api/generate-video-with-image.js": {
       "maxDuration": 300
     },
-    "api/enhance-prompt.js": {
-      "maxDuration": 30
-    },
-    "api/ai-suggestions.js": {
-      "maxDuration": 30
-    },
     "api/generate-transition-video.js": {
       "maxDuration": 300
     },
-    "api/ai-chat.js": {
-      "maxDuration": 30
-    },
     "api/generate-video-vider.js": {
       "maxDuration": 300
-    },
-    "api/chatglm-chat.js": {
-      "maxDuration": 60
     },
     "api/generate-video-huggingface.js": {
       "maxDuration": 300
@@ -39,21 +27,45 @@
     "api/generate-video-gemini.js": {
       "maxDuration": 60
     },
-    "api/v1/chat/completions.js": {
+    "api/v1.js": {
       "maxDuration": 300
     },
-    "api/v1/models.js": {
+    "api/api-router.js": {
       "maxDuration": 10
     }
   },
   "rewrites": [
     {
+      "source": "/api/health",
+      "destination": "/api/api-router"
+    },
+    {
+      "source": "/api/options",
+      "destination": "/api/api-router"
+    },
+    {
+      "source": "/api/enhance-prompt",
+      "destination": "/api/api-router"
+    },
+    {
+      "source": "/api/ai-suggestions",
+      "destination": "/api/api-router"
+    },
+    {
+      "source": "/api/ai-chat",
+      "destination": "/api/api-router"
+    },
+    {
+      "source": "/api/chatglm-chat",
+      "destination": "/api/api-router"
+    },
+    {
       "source": "/v1/chat/completions",
-      "destination": "/api/v1/chat/completions"
+      "destination": "/api/v1"
     },
     {
       "source": "/v1/models",
-      "destination": "/api/v1/models"
+      "destination": "/api/v1"
     }
   ]
 }
